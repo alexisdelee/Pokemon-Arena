@@ -1,1 +1,23 @@
 <p>pokemons works!</p>
+
+<mat-grid-list cols="9" rowHeight="1:1.4" style="height: 100%">
+  <mat-grid-tile *ngFor="let pokemon of pokemons">
+    <mat-card style="width: 80%; height: 85%">
+      <mat-card-header>
+        <mat-card-title>{{pokemon.name | titlecase}}</mat-card-title>
+      </mat-card-header>
+
+      <img mat-card-image style="min-width: 96px; height:auto" src="{{pokemon.sprites.front_default}}">
+
+      <mat-card-content>
+        <mat-grid-list style="min-width: 100%" cols="2">
+          <mat-grid-tile *ngFor="let pokemonType of pokemon.types">
+            <img src="{{'assets/types/' + pokemonType.type.name + '.png'}}">
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+
+      <mat-card-footer>Details</mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
