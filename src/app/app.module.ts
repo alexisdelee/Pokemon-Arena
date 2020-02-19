@@ -19,13 +19,15 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PokemonsComponent } from "./pokemons/pokemons.component";
+import { CombatComponent } from './combat/combat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonsComponent,
     NavBarComponent,
-    PokemonsComponent
+    PokemonsComponent,
+    CombatComponent
   ],
   imports: [
     BrowserModule,
