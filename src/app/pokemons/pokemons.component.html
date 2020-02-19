@@ -1,37 +1,43 @@
 <mat-grid-list cols="9" rowHeight="1:1" class="selected-pokemons">
-  <mat-grid-tile class="selected-pokemon-tile">
-    <span>toto</span>
-  </mat-grid-tile>
-  <mat-grid-tile class="selected-pokemon-tile">
-    <span>toto</span>
-  </mat-grid-tile>
-  <mat-grid-tile class="selected-pokemon-tile">
-    <span>toto</span>
-  </mat-grid-tile>
+  <div title="Niveau de l'équipe : {{remainingLevelQuota(yourSelectedPokemons)}} ({{150 - remainingLevelQuota(yourSelectedPokemons)}} point(s) d'expérience restants)">
+    <div *ngIf="yourSelectedPokemons.length > 0; else elseBlock">
+      <div *ngFor="let yourSelectedPokemon of yourSelectedPokemons">
+        <mat-grid-tile class="selected-pokemon-tile">
+          <img src="{{yourSelectedPokemon.sprites.front_default}}">
+        </mat-grid-tile>
+      </div>
+      <div *ngFor="let emptyTile of initializeEmptyArray(3 - yourSelectedPokemons.length)">
+        <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
+      <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
+      <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
+    </ng-template>
+  </div>
 
   <mat-grid-tile></mat-grid-tile>
 
-  <mat-grid-tile class="versus">VS</mat-grid-tile>
+  <mat-grid-tile class="versus">VERSUS</mat-grid-tile>
 
   <mat-grid-tile></mat-grid-tile>
 
-  <mat-grid-tile class="selected-pokemon-tile">
-    <img style="position: absolute; z-index: 100;" src="assets/secret.png">
-    <img src="{{pokemons[0].sprites.front_default}}" style="filter: grayscale(100%) blur(3px);">
-  </mat-grid-tile>
-  <mat-grid-tile class="selected-pokemon-tile">
-    <span>toto</span>
-  </mat-grid-tile>
-  <mat-grid-tile class="selected-pokemon-tile">
-    <span>toto</span>
-  </mat-grid-tile>
+  <div title="Niveau de l'équipe : {{remainingLevelQuota(selectedEnnemyPokemons)}}">
+    <div *ngFor="let selectedEnnemyPokemon of selectedEnnemyPokemons">
+      <mat-grid-tile class="selected-pokemon-tile">
+        <img class="secret" src="assets/secret.png">
+        <img src="{{selectedEnnemyPokemon.sprites.front_default}}" style="filter: grayscale(100%) blur(3px);">
+      </mat-grid-tile>
+    </div>
+  </div>
 </mat-grid-list>
 
 <mat-grid-list cols="9" rowHeight="1:1.4" class="picker-pokemons">
-  <mat-grid-tile class="pokemon-tile" *ngFor="let pokemon of pokemons" (click)="onClickPokemon(pokemon)">
+  <mat-grid-tile *ngFor="let pokemon of pokemons" (click)="onClickPokemon($event, pokemon)" class="pokemon-tile pokemon-tile-{{pokemon.id}}">
     <mat-card>
       <mat-card-header matBadge="{{pokemon.level}}" matBadgeColor="{{this.colorForLevel(pokemon.level)}}">
-        <mat-card-title>{{pokemon.name | titlecase}}</mat-card-title>
+        <mat-card-title style="text-overflow: ellipsis; overflow: hidden; width: 70px; white-space: nowrap;" title="{{pokemon.name | titlecase}}">{{pokemon.name | titlecase}}</mat-card-title>
       </mat-card-header>
 
       <img src="{{pokemon.sprites.front_default}}">

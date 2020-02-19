@@ -6,7 +6,6 @@ import { Pokemon, Stat } from './pokemon';
 
 @Injectable()
 export class PokemonsService {
-
   constructor(private http: HttpClient) {
   }
 
@@ -20,7 +19,6 @@ export class PokemonsService {
 
     while (arr.length < n) {
       const r = Math.floor(Math.random() * maxId) + 1;
-      console.log(r);
       if (!numArray.includes(r)) {
         numArray.push(r);
         arr.push(this.findPokemon(r));
@@ -35,9 +33,9 @@ export class PokemonsService {
   }
 
   generateLevel(): number {
-    let r = Math.floor(Math.random() * 200) - 100; // [-100; 100]
+    let r = Math.floor(Math.random() * 200) - 99; // ]-100; 100]
     if (r < 0) {
-      r = Math.pow(r, 2) * -1; // [-10000; -1]
+      r = Math.pow(r, 2) * -1; // ]-10000; -1]
     } else {
       r = Math.pow(r, 2); // [0; 10000]
     }

@@ -1,9 +1,16 @@
 mat-grid-list.selected-pokemons {
-  margin: 25px 15px;
+  margin: 25px 15px 55px 15px;
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  background: #F5F5F5;
 
   mat-grid-tile {
     &.selected-pokemon-tile {
       border: 2px solid gray;
+
+      img.secret {
+        position: absolute;
+        z-index: 100;
+      }
     }
 
     &.versus {
@@ -20,7 +27,11 @@ mat-grid-list.picker-pokemons {
   mat-grid-tile.pokemon-tile {
     cursor: pointer;
 
-    &:hover {
+    &.pokemon-tile-selected {
+      background: #ffd740;
+    }
+
+    &:hover:not(.pokemon-tile-selected) {
       background: #673ab7;
     }
 
