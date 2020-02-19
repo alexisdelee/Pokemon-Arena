@@ -21,16 +21,13 @@ export class PokemonsService {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}/`);
   }
 
-  private getPokemonsCount(): Observable<any> {
-    return this.http.get('https://pokeapi.co/api/v2/pokemon');
-  }
-
-  getPokemons(i: number): Observable<Pokemon[]> {
+  getPokemons(n: number, maxId: number): Observable<Pokemon[]> {
     const arr = [];
     const numArray = [];
 
-    while (arr.length < i) {
-      const r = Math.floor(Math.random() * 100) + 1;
+    while (arr.length < n) {
+      const r = Math.floor(Math.random() * maxId) + 1;
+      console.log(r);
       if (!numArray.includes(r)) {
         numArray.push(r);
         arr.push(this.findPokemon(r));

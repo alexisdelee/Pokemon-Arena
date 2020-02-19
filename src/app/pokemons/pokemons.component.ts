@@ -17,7 +17,7 @@ export class PokemonsComponent implements OnInit {
   constructor(private pokeSvc: PokemonsService) { }
 
   ngOnInit(): void {
-    this.pokeSvc.getPokemons(27).subscribe({
+    this.pokeSvc.getPokemons(27, 600).subscribe({
         next: value => this.pokemons = value
     });
   }
