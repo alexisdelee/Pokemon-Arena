@@ -43,6 +43,7 @@ export interface Stat {
 export interface Pokemon {
     id: number;
     hp: number;
+    level: number;
     name: string;
     base_experience: number;
     height: number;

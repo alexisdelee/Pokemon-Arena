@@ -40,4 +40,26 @@ export class PokemonsService {
   getItemFromURI<T>(uri: string): Observable<T> {
     return this.http.get<T>(uri);
   }
+
+  generateLevel(): number {
+    let r = Math.floor(Math.random() * 200) - 100; // [-100; 100]
+    if (r < 0) {
+      r = Math.pow(r, 2) * -1; // [-10000; -1]
+    } else {
+      r = Math.pow(r, 2); // [0; 10000]
+    }
+
+    if (r < -2500) { // [-10000; -2500[
+      // [1; 25[
+      r = Math.round((1 - (r + 2500) / -7500) * 25);
+    } else if (r >= -2500 && r <= 2500) { // [-2500; 2500]
+      // [25; 75]
+      r = Math.round(((r / 2500) + 1) * 25 + 25);
+    } else if (r > 2500) { // ]2500; 10000]
+      // ]75; 100]
+      r = Math.round(75 + ((r - 2500) / 7500) * 25);
+    }
+
+    return r;
+  }
 }
