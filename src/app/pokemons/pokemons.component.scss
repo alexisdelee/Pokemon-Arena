@@ -1,0 +1,55 @@
+mat-grid-list.selected-pokemons {
+  margin: 25px 15px;
+
+  mat-grid-tile {
+    &.selected-pokemon-tile {
+      border: 2px solid gray;
+    }
+
+    &.versus {
+      font-size: 35px;
+      font-weight: bold;
+    }
+  }
+}
+
+mat-grid-list.picker-pokemons {
+  // height: 100%;
+  margin: 25px 0;
+
+  mat-grid-tile.pokemon-tile {
+    cursor: pointer;
+
+    &:hover {
+      background: #673ab7;
+    }
+
+    mat-card {
+      width: 70%;
+      height: 80%;
+
+      mat-card-title {
+        font-size: 15px;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      img {
+          min-width: 96px;
+          height: auto;
+        }
+
+      mat-card-content {
+        mat-grid-list {
+          min-width: 100%;
+
+          img.pokemon-types {
+             height: 30px;
+             min-width: auto;
+             margin-bottom: 15px;
+          }
+        }
+      }
+    }
+  }
+}

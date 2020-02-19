@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {PokemonsService} from './pokemons.service';
-import {Pokemon} from './Pokemon';
-import {Type} from './Type';
+import { PokemonsService } from './pokemons.service';
+
+import { Pokemon } from './Pokemon';
+import { Type } from './Type';
 
 @Component({
   selector: 'app-pokemons',
@@ -18,7 +19,24 @@ export class PokemonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.pokeSvc.getPokemons(27, 600).subscribe({
-        next: value => this.pokemons = value
+      next: value => {
+        this.pokemons = value
+        this.pokemons.forEach(pokemon => pokemon.level = this.pokeSvc.generateLevel());
+      }
     });
+  }
+
+  colorForLevel(level: number): string {
+    if (level < 25) {
+      return "primary";
+    } else if (level > 75) {
+      return "warn";
+    } else {
+      return "accent";
+    }
+  }
+
+  onClickPokemon(pokemon: Pokemon): void {
+    console.log(pokemon);
   }
 }

@@ -13,8 +13,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatListModule} from '@angular/material/list';
-import {HttpClientModule} from '@angular/common/http';
+import { MatListModule } from '@angular/material/list';
+import { MatBadgeModule } from '@angular/material/badge';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +45,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatGridListModule,
     MatMenuModule,
     MatListModule,
+    MatBadgeModule,
     HttpClientModule
   ],
   providers: [],

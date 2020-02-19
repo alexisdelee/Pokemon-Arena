@@ -1,23 +1,48 @@
-<p>pokemons works!</p>
+<mat-grid-list cols="9" rowHeight="1:1" class="selected-pokemons">
+  <mat-grid-tile class="selected-pokemon-tile">
+    <span>toto</span>
+  </mat-grid-tile>
+  <mat-grid-tile class="selected-pokemon-tile">
+    <span>toto</span>
+  </mat-grid-tile>
+  <mat-grid-tile class="selected-pokemon-tile">
+    <span>toto</span>
+  </mat-grid-tile>
 
-<mat-grid-list cols="9" rowHeight="1:1.4" style="height: 100%">
-    <mat-grid-tile *ngFor="let pokemon of pokemons">
-      <mat-card style="width: 80%; height: 85%">
-        <mat-card-header>
-          <mat-card-title>{{pokemon.name | titlecase}}</mat-card-title>
-        </mat-card-header>
+  <mat-grid-tile></mat-grid-tile>
 
-        <img mat-card-image style="min-width: 96px; height:auto" src="{{pokemon.sprites.front_default}}">
+  <mat-grid-tile class="versus">VS</mat-grid-tile>
 
-        <mat-card-content>
-          <mat-grid-list style="min-width: 100%" cols="2">
-            <mat-grid-tile *ngFor="let pokemonType of pokemon.types">
-              <img src="{{'assets/types/' + pokemonType.type.name + '.png'}}">
-            </mat-grid-tile>
-          </mat-grid-list>
-        </mat-card-content>
+  <mat-grid-tile></mat-grid-tile>
 
-        <mat-card-footer>Details</mat-card-footer>
-      </mat-card>
+  <mat-grid-tile class="selected-pokemon-tile">
+    <img style="position: absolute; z-index: 100;" src="assets/secret.png">
+    <img src="{{pokemons[0].sprites.front_default}}" style="filter: grayscale(100%) blur(3px);">
+  </mat-grid-tile>
+  <mat-grid-tile class="selected-pokemon-tile">
+    <span>toto</span>
+  </mat-grid-tile>
+  <mat-grid-tile class="selected-pokemon-tile">
+    <span>toto</span>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="9" rowHeight="1:1.4" class="picker-pokemons">
+  <mat-grid-tile class="pokemon-tile" *ngFor="let pokemon of pokemons" (click)="onClickPokemon(pokemon)">
+    <mat-card>
+      <mat-card-header matBadge="{{pokemon.level}}" matBadgeColor="{{this.colorForLevel(pokemon.level)}}">
+        <mat-card-title>{{pokemon.name | titlecase}}</mat-card-title>
+      </mat-card-header>
+
+      <img src="{{pokemon.sprites.front_default}}">
+
+      <mat-card-content>
+        <mat-grid-list cols="2">
+          <mat-grid-tile *ngFor="let pokemonType of pokemon.types">
+            <img class="pokemon-types" src="{{'assets/types/' + pokemonType.type.name + '.png'}}" title="{{pokemonType.type.name}}">
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
