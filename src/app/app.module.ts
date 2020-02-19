@@ -18,8 +18,9 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PokemonsComponent } from "./pokemons/pokemons.component";
+import { PokemonsComponent } from './pokemons/pokemons.component';
 import { CombatComponent } from './combat/combat.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CombatComponent } from './combat/combat.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FlexLayoutModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,

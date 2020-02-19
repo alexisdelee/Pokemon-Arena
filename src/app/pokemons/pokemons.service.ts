@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {forkJoin, Observable} from 'rxjs';
 
-import { Pokemon } from './pokemon';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
+import { Pokemon, Stat } from './pokemon';
 
 @Injectable()
 export class PokemonsService {
@@ -39,5 +32,19 @@ export class PokemonsService {
 
   getItemFromURI<T>(uri: string): Observable<T> {
     return this.http.get<T>(uri);
+  }
+
+  getStatByName(poke: Pokemon, statName: string): Stat {
+    const found = poke.stats.find((stat) => {
+      if (stat.stat.name === statName) {
+        return true;
+      }
+    });
+
+    if (!found) {
+      throw new Error(`Unknown statname : ${statName}`);
+    }
+
+    return found;
   }
 }

@@ -1,0 +1,25 @@
+<mat-grid-list cols="6" style="height: 100%" rowHeight="fit">
+  <mat-grid-tile colspan="6" rowspan="3" class="combat-frame">
+    <mat-card>
+      LOL
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2" rowspan="2" style="background-color: blue">P</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #a1ff2f">A</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #ff5410">B</mat-grid-tile>
+
+  <mat-grid-tile colspan="2" rowspan="2" style="background-color: rgba(16,16,16,0.85)">
+    <div style="overflow: scroll; height: 100%; width: 100%" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <mat-list dense>
+        <mat-list-item *ngFor="let txt of texts" style="color: #c1c1c1">
+          {{txt}}
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #aeff27">C</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #0dff9e">D</mat-grid-tile>
+
+
+</mat-grid-list>
