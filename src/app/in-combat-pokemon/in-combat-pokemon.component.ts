@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Pokemon} from '../pokemon/pokemon.model';
-import {PokemonService} from '../pokemon/pokemon.service';
+
+import { Pokemon } from '../pokemon/pokemon.model';
+import { PokemonService } from '../pokemon/pokemon.service';
 
 @Component({
-  selector: 'app-in-combat-pokemon',
+  selector: 'in-combat-pokemon',
   templateUrl: './in-combat-pokemon.component.html',
   styleUrls: ['./in-combat-pokemon.component.scss']
 })
@@ -13,8 +14,7 @@ export class InCombatPokemonComponent implements OnInit {
   hpMax: number;
   imageUrl: string;
 
-  constructor(private pokemonSvc: PokemonService) {
-  }
+  constructor(private pokemonSvc: PokemonService) { }
 
   ngOnInit(): void {
     this.hpMax = this.pokemonSvc.getPokemonHpMax(this.pokemon);

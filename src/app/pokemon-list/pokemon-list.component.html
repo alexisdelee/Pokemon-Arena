@@ -27,7 +27,7 @@
 
   <mat-grid-tile rowspan="2" colspan="3" class="versus">VERSUS</mat-grid-tile>
 
-  <div title="Niveau de l'équipe adverse : {{remainingLevelQuota(enemyTeam)}}">
+  <div title="Level of the opposing team: {{remainingLevelQuota(enemyTeam)}}">
     <div *ngFor="let enemyTeamProkemon of enemyTeam">
       <mat-grid-tile rowspan="2" class="selected-pokemon-tile">
         <img class="secret" src="assets/secret.png">
@@ -37,7 +37,7 @@
   </div>
 
   <mat-grid-tile rowspan="1" colspan="9" class="explication">
-    <h2>Vous devez sélectionner 3 pokemons pour un maximum de {{MAX_LEVEL_QUOTA}} points de niveau (points restants : {{MAX_LEVEL_QUOTA - remainingLevelQuota(myTeam)}}).</h2>
+    <h2>You must select 3 pokemons for a maximum of {{MAX_LEVEL_QUOTA}} level points (remaining points: {{MAX_LEVEL_QUOTA - remainingLevelQuota(myTeam)}}).</h2>
   </mat-grid-tile>
 
   <mat-grid-tile rowspan="1" colspan="9" *ngIf="myTeam.length == 3">

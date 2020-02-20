@@ -72,12 +72,13 @@ export class PokemonListComponent implements OnInit {
 
       this.levelQuota -= pokemon.level;
       this.myTeam = this.myTeam.filter(myTeamPokemon => myTeamPokemon.id != pokemon.id);
+      this.combatSvc.state.myTeam = this.myTeam;
     } else {
       if (this.myTeam.length == 3) {
-        return alert('Vous avez déjà sélectionné 3 pokemons. Veuillez en désélectionner un pour libérer de la place.');
+        return alert('You have already selected 3 pokemons. Please deselect one to free up space.');
       } else {
         if (this.levelQuota + pokemon.level > this.MAX_LEVEL_QUOTA) {
-          return alert('Vous dépassez le quota autorisé pour cette équipe.');
+          return alert('You exceed the authorized quota for this team.');
         }
       }
 

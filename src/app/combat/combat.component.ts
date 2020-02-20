@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {CombatState} from './CombatState';
-import {PokemonService} from '../pokemon/pokemon.service';
-import {CombatService} from './combat.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+
+import { CombatState } from './CombatState';
+import { PokemonService } from '../pokemon/pokemon.service';
+import { CombatService } from './combat.service';
 
 @Component({
-  selector: 'app-combat',
+  selector: 'combat',
   templateUrl: './combat.component.html',
   styleUrls: ['./combat.component.scss'],
 })
