@@ -1,4 +1,4 @@
-<img class="pokemon-sprite" [ngClass]="facing ? 'enemy-pokemon-sprite' : 'my-pokemon-sprite'" src="http://www.pokestadium.com/sprites/xy/{{facing ? '' : 'back/'}}{{pokemon.name}}.gif">
+<img class="pokemon-sprite" (error)="onError()" [ngClass]="facing ? 'enemy-pokemon-sprite' : 'my-pokemon-sprite'" [src]="imageUrl">
 <mat-card class="pokemon-infos" [ngClass]="facing ? 'enemy-pokemon-infos' : 'my-pokemon-infos'">
   <mat-card-header style="text-align: left">
     <mat-card-title>

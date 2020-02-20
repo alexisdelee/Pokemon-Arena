@@ -11,12 +11,17 @@ export class InCombatPokemonComponent implements OnInit {
   @Input() pokemon: Pokemon;
   @Input() facing: boolean;
   hpMax: number;
+  imageUrl: string;
 
   constructor(private pokemonSvc: PokemonService) {
   }
 
   ngOnInit(): void {
     this.hpMax = this.pokemonSvc.getPokemonHpMax(this.pokemon);
+    this.imageUrl = 'http://www.pokestadium.com/sprites/xy/' + (this.facing ? '' : 'back/') + this.pokemon.name + '.gif';
   }
 
+  onError(): void {
+    this.imageUrl = this.pokemon.sprites.front_default;
+  }
 }
