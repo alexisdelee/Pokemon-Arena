@@ -37,11 +37,9 @@ export class PokemonListComponent implements OnInit {
     this.pokemonListService.getPokemonPool(27, 600).subscribe({
       next: value => {
         this.pokemonPool = value;
-        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel())
+        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel());
         this.pokemonPool = this.pokemonPool.sort((pokemonA, pokemonB) => {
-          if (pokemonA.level < pokemonB.level) return -1;
-          else if (pokemonA.level > pokemonB.level) return 1;
-          else return 0;
+          return pokemonA.level - pokemonB.level > 1 ? -1 : pokemonA.level - pokemonB.level === 0 ? 0 : 1;
         });
 
         for (let i = 0; i < 3; i++) {
@@ -76,7 +74,7 @@ export class PokemonListComponent implements OnInit {
       this.myTeam = this.myTeam.filter(myTeamPokemon => myTeamPokemon.id != pokemon.id);
     } else {
       if (this.myTeam.length == 3) {
-        return alert("Vous avez déjà sélectionné 3 pokemons. Veuillez en désélectionner un pour libérer de la place.");
+        return alert('Vous avez déjà sélectionné 3 pokemons. Veuillez en désélectionner un pour libérer de la place.');
       } else {
         if (this.levelQuota + pokemon.level > this.MAX_LEVEL_QUOTA) {
           return alert('Vous dépassez le quota autorisé pour cette équipe.');
