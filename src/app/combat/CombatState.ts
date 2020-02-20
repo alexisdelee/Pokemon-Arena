@@ -1,5 +1,5 @@
-import {Pokemon} from '../pokemons/Pokemon';
-import {Move} from '../pokemons/Move';
+import {Pokemon} from '../pokemon/pokemon.model';
+import {Move} from '../pokemon/move.model';
 
 export class CombatState {
   myTeam: Pokemon[];

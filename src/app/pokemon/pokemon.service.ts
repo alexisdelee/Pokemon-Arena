@@ -47,4 +47,8 @@ export class PokemonService {
   findPokemon(id: number): Observable<Pokemon> {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}/`);
   }
+
+  getPokemonHpMax(pokemon: Pokemon) {
+    return Math.ceil((((2 * this.getStatByName(pokemon, 'hp').base_stat + 100) * pokemon.level) / 100) + 10);
+  }
 }

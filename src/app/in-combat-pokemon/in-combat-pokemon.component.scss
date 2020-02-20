@@ -1,5 +1,68 @@
+.my-pokemon-infos {
+  margin-right: 1%;
+  margin-bottom: 1%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.enemy-pokemon-infos {
+  left: 0;
+  top: 0;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+
 .pokemon-infos {
   width: 30%;
-  margin-left: 65%;
-  margin-bottom: 10%;
+  color: #484848;
+  font-weight: bold;
+  background: rgb(184, 184, 184);
+  background: linear-gradient(0deg, rgba(184, 184, 184, 0.98) 46%, rgba(224, 224, 224, 0.96) 100%);
+}
+
+.my-pokemon-sprite {
+  margin-right: 20%;
+  left: 20%;
+  bottom: 72px;
+  scale: 8;
+}
+
+.enemy-pokemon-sprite {
+  margin-left: 20%;
+  right: 20%;
+  top: 175px;
+  scale: 6;
+}
+
+.pokemon-sprite {
+  position: absolute;
+}
+
+.pokemon-hp-count {
+  margin-bottom: 0;
+  text-align: center;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+.hp-bar {
+  height: 7px;
+  margin-right: 10px;
+  border-radius: 3px;
+}
+
+.hp-bar-container {
+  color: #ffd740;
+  font-size: large;
+  font-weight: bold;
+  background-color: black;
+  border-radius: 3px;
+}
+
+.pokemon-lvl {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  margin-right: 36px;
 }

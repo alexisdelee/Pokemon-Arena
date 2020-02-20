@@ -32,7 +32,7 @@ import { PokemonComponent } from './pokemon/pokemon.component';
     NavBarComponent,
     PokemonListComponent,
     CombatComponent,
-    PokemonComponent
+    PokemonComponent,
     InCombatPokemonComponent
   ],
   imports: [
