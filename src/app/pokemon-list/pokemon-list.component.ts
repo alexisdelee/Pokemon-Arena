@@ -37,7 +37,7 @@ export class PokemonListComponent implements OnInit {
     this.pokemonListService.getPokemonPool(27, 600).subscribe({
       next: value => {
         this.pokemonPool = value;
-        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel());
+        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateRandomLevel());
         this.pokemonPool = this.pokemonPool.sort((pokemonA, pokemonB) => {
           return pokemonA.level - pokemonB.level > 1 ? -1 : pokemonA.level - pokemonB.level === 0 ? 0 : 1;
         });

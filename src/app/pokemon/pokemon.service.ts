@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 
 import { Pokemon, Stat } from './pokemon.model';
+import {Move} from './move.model';
+import {ApiID} from './apiid.model';
 
 @Injectable()
 export class PokemonService {
@@ -22,7 +24,7 @@ export class PokemonService {
     return found;
   }
 
-  generateLevel(): number {
+  generateRandomLevel(): number {
     let r = Math.floor(Math.random() * 200) - 99; // ]-100; 100]
     if (r < 0) {
       r = Math.pow(r, 2) * -1; // ]-10000; -1]
@@ -48,7 +50,19 @@ export class PokemonService {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}/`);
   }
 
+  getItemFromURI<T>(uri: string): Observable<T> {
+    return this.http.get<T>(uri);
+  }
+
   getPokemonHpMax(pokemon: Pokemon) {
     return Math.ceil((((2 * this.getStatByName(pokemon, 'hp').base_stat + 100) * pokemon.level) / 100) + 10);
+  }
+
+  loadPickedMoves(movesIds: ApiID[]): Observable<Move[]> {
+    const movesPromises = [];
+
+    movesIds.forEach((move) => movesPromises.push(this.getItemFromURI<Move>(move.url)));
+
+    return forkJoin<Move>(movesPromises);
   }
 }

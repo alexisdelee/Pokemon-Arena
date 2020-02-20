@@ -4,17 +4,23 @@ import { CombatState } from './CombatState';
 import { Move } from '../pokemon/move.model';
 
 import { PokemonService } from '../pokemon/pokemon.service';
+import {Intent} from './turn-order.model';
+import {Pokemon} from '../pokemon/pokemon.model';
+import {Type} from '../pokemon/type.model';
+import {forkJoin, Observable, zip} from 'rxjs';
+import {flatMap, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CombatService {
-  public state: CombatState;
 
   constructor(private pokemonService: PokemonService) {
-    console.log("OH");
     this.state = new CombatState();
   }
+  public state: CombatState;
+
+  private typeRelation;
 
   initTeams(): boolean {
     if (this.state.enemyTeam.length === 0 || this.state.myTeam.length === 0) {
@@ -35,12 +41,12 @@ export class CombatService {
     return true;
   }
 
-  getMovesOrder(cs: CombatState): Move[] {
+  getMovesOrder(): Intent[] {
     const meFirst = [this.state.myPokemonIntent, this.state.enemyPokemonIntent];
     const enemyFirst = [this.state.enemyPokemonIntent, this.state.myPokemonIntent];
 
-    if (this.state.myPokemonIntent.priority - this.state.enemyPokemonIntent.priority !== 0) {
-      return this.state.myPokemonIntent.priority > this.state.enemyPokemonIntent.priority ? meFirst : enemyFirst;
+    if (this.state.myPokemonIntent.move.priority - this.state.enemyPokemonIntent.move.priority !== 0) {
+      return this.state.myPokemonIntent.move.priority > this.state.enemyPokemonIntent.move.priority ? meFirst : enemyFirst;
     }
 
     const myPokemonSpeed = this.pokemonService.getStatByName(this.state.myCurrentPokemon, 'speed');
@@ -51,6 +57,50 @@ export class CombatService {
     }
 
     return myPokemonSpeed.base_stat > enemyPokemonSpeed.base_stat ? meFirst : enemyFirst;
+  }
+
+  public getTypeModifier(intent: Intent, target: Pokemon): Observable<number> {
+    return this.pokemonService.getItemFromURI<Type>(intent.move.type.url ?? intent.move.type.type.url).pipe(
+      map((attackType) => {
+        let m = 1;
+        target.types.forEach((targetType) => {
+          if (attackType.damage_relations.double_damage_to
+            .find((typeRelation) => typeRelation.name === targetType.name)) {
+            m *= 2;
+          } else if (attackType.damage_relations.half_damage_to
+            .find((typeRelation) => typeRelation.name === targetType.name)) {
+            m *= 0.5;
+          } else if (attackType.damage_relations.no_damage_to
+            .find((typeRelation) => typeRelation.name === targetType.name)) {
+            m *= 0;
+          }
+        });
+
+        return m;
+      }),
+    );
+  }
+
+  private getModifiers(intent: Intent, target: Pokemon): number {
+    const isSTABED = intent.pokemon.types.find((type) => type.name === intent.move.type.name);
+
+    return isSTABED ? 1.5 : 1;
+  }
+
+  private getStatsModifier(intent: Intent, target: Pokemon): number {
+    return 1;
+  }
+
+  public applyDamages(intent: Intent, target: Pokemon, typesModifier: number): number {
+    const dmg = (
+      (
+        (2 * intent.pokemon.level / 5 + 2) * intent.move.power * this.getStatsModifier(intent, target)
+      ) / 50 + 2
+    ) * typesModifier * this.getModifiers(intent, target);
+
+    target.hp = target.hp - dmg >= 0 ? target.hp - dmg : 0;
+
+    return dmg;
   }
 
 /*

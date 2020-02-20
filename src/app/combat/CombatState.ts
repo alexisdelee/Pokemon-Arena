@@ -1,5 +1,6 @@
 import {Pokemon} from '../pokemon/pokemon.model';
 import {Move} from '../pokemon/move.model';
+import {Intent} from './turn-order.model';
 
 export class CombatState {
   myTeam: Pokemon[] = [];
@@ -8,8 +9,8 @@ export class CombatState {
   myCurrentPokemon: Pokemon|null;
   enemyCurrentPokemon: Pokemon|null;
 
-  myPokemonIntent: Move|null;
-  enemyPokemonIntent: Move|null;
+  myPokemonIntent: Intent|null;
+  enemyPokemonIntent: Intent|null;
 
   constructor() {
   }

@@ -14,9 +14,41 @@
       </div>
     </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspan="2" style="background-color: blue">P</mat-grid-tile>
-    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #a1ff2f">A</mat-grid-tile>
-    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #ff5410">B</mat-grid-tile>
-    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #aeff27">C</mat-grid-tile>
-    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #0dff9e">D</mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #a1ff2f">
+      <button
+        (click)="pickAMove(state.myCurrentPokemon.pickedMoves[0])"
+        [disabled]="!timeToPickAMove"
+        mat-button
+        style="background-color: #ededed">
+        {{state.myCurrentPokemon.pickedMoves[0].name | titlecase}}
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #ff5410">
+      <button
+        (click)="pickAMove(state.myCurrentPokemon.pickedMoves[1])"
+        [disabled]="!timeToPickAMove"
+        mat-button
+        style="background-color: #ededed">
+        {{state.myCurrentPokemon.pickedMoves[1].name | titlecase}}
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #aeff27">
+      <button
+        (click)="pickAMove(state.myCurrentPokemon.pickedMoves[2])"
+        [disabled]="!timeToPickAMove"
+        mat-button
+        style="background-color: #ededed">
+        {{state.myCurrentPokemon.pickedMoves[2].name | titlecase}}
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1" style="background-color: #0dff9e">
+      <button
+        (click)="pickAMove(state.myCurrentPokemon.pickedMoves[3])"
+        [disabled]="!timeToPickAMove"
+        mat-button
+        style="background-color: #ededed">
+        {{state.myCurrentPokemon.pickedMoves[3].name | titlecase}}
+      </button>
+    </mat-grid-tile>
   </mat-grid-list>
 </ng-template>

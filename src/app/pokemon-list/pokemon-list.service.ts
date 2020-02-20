@@ -24,8 +24,4 @@ export class PokemonListService {
 
     return forkJoin<Pokemon>(arr);
   }
-
-  getItemFromURI<T>(uri: string): Observable<T> {
-    return this.http.get<T>(uri);
-  }
 }

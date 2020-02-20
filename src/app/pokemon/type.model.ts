@@ -53,6 +53,7 @@ export interface Type {
   id: number;
   slot: number;
   type: ApiID;
+  url: string;
   name: string;
   damage_relations: DamageRelations;
   game_indices: GameIndice[];

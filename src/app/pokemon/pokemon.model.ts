@@ -55,6 +55,7 @@ export interface Pokemon {
     game_indices: GameIndice[];
     held_items: HeldItem[];
     moves: Move[];
+    pickedMoves: Move[];
     species: ApiID;
     sprites: Sprites;
     stats: Stat[];
