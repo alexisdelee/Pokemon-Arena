@@ -1,4 +1,7 @@
+<audio *ngIf="audio"></audio>
+
 <mat-progress-bar *ngIf="showLoading; else elseBlock" mode="query"></mat-progress-bar>
+
 <ng-template #elseBlock>
   <mat-grid-list cols="12" style="height: 100%" rowHeight="fit">
     <mat-grid-tile colspan="9" rowspan="3" class="combat-backgroud" style="background-image: url('/assets/backgrounds/ocean.png')">

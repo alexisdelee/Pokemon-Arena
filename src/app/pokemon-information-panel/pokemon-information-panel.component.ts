@@ -16,7 +16,6 @@ export class PokemonInformationPanelComponent implements OnInit {
   constructor(private pokemonSvc: PokemonService) { }
 
   ngOnInit(): void {
-    console.log(this.pokemon);
     this.hpMax = this.pokemonSvc.getPokemonHpMax(this.pokemon);
   }
 }

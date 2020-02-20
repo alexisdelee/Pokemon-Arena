@@ -23,6 +23,8 @@ export class PokemonListComponent implements OnInit {
   myTeam: Pokemon[];
   enemyTeam: Pokemon[];
 
+  audio: boolean = false;
+
   constructor(
     private combatSvc: CombatService,
     private pokemonListService: PokemonListService,
@@ -90,6 +92,6 @@ export class PokemonListComponent implements OnInit {
   }
 
   goToPage(pageName: string): void {
-    this.router.navigate([pageName]);
+    this.router.navigate([pageName], {queryParams: {audio: this.audio}});
   }
 }

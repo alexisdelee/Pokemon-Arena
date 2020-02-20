@@ -14,12 +14,17 @@ export class CombatComponent implements OnInit {
   combatLog = '';
   showLoading = true;
   state: CombatState;
+  audio: boolean = false;
 
   constructor(
     private combatSvc: CombatService,
     private pokemonSvc: PokemonService,
     private router: Router
   ) {
+    const queryParams = this.router.getCurrentNavigation().extras.queryParams;
+    if (queryParams) {
+      this.audio = queryParams.audio;
+    }
   }
 
   private log(txt: string) {
@@ -38,5 +43,7 @@ export class CombatComponent implements OnInit {
     this.log(`${this.state.myCurrentPokemon.name.toUpperCase()} GO !`);
     this.log(`The enemy sent ${this.state.enemyCurrentPokemon.name.toUpperCase()} !`);
     this.showLoading = false;
+
+    // console.log(this.route.snapshot.queryParamMap.get("audio"));
   }
 }

@@ -40,6 +40,10 @@
     <h2>You must select 3 pokemons for a maximum of {{MAX_LEVEL_QUOTA}} level points (remaining points: {{MAX_LEVEL_QUOTA - remainingLevelQuota(myTeam)}}).</h2>
   </mat-grid-tile>
 
+  <mat-grid-tile rowspan="1" colspan="9">
+    <input type="checkbox" id="auto-audio" (change)="audio = $event.target.checked"><label for="auto-audio">Play music automatically at the start of each fight</label>
+  </mat-grid-tile>
+
   <mat-grid-tile rowspan="1" colspan="9" *ngIf="myTeam.length == 3">
     <button mat-raised-button color="primary" (click)="goToPage('/combat')">START</button>
   </mat-grid-tile>

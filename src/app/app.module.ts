@@ -28,6 +28,7 @@ import { PokemonComponent } from './pokemon/pokemon.component';
 import { CombatService } from './combat/combat.service';
 import { PokemonService } from './pokemon/pokemon.service';
 import { PokemonInformationPanelComponent } from './pokemon-information-panel/pokemon-information-panel.component';
+import { AudioComponent } from './audio/audio.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PokemonInformationPanelComponent } from './pokemon-information-panel/po
     CombatComponent,
     PokemonComponent,
     InCombatPokemonComponent,
-    PokemonInformationPanelComponent
+    PokemonInformationPanelComponent,
+    AudioComponent
   ],
   imports: [
     BrowserModule,
