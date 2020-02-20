@@ -1,5 +1,7 @@
 <img class="pokemon-sprite" (error)="onError()" [ngClass]="facing ? 'enemy-pokemon-sprite' : 'my-pokemon-sprite'" [src]="imageUrl">
-<mat-card class="pokemon-infos" [ngClass]="facing ? 'enemy-pokemon-infos' : 'my-pokemon-infos'">
+
+<pokemon-information-panel [pokemon]="pokemon" [hide-status]="facing"></pokemon-information-panel>
+<!-- <mat-card class="pokemon-infos" [ngClass]="facing ? 'enemy-pokemon-infos' : 'my-pokemon-infos'">
   <mat-card-header style="text-align: left">
     <mat-card-title>
       {{pokemon.name | titlecase}}
@@ -18,4 +20,4 @@
       <h1 class="pokemon-hp-count">{{pokemon.hp}} / {{hpMax}}</h1>
     </div>
   </mat-card-content>
-</mat-card>
+</mat-card> -->

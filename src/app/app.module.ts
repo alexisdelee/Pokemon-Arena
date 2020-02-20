@@ -16,17 +16,19 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatBadgeModule } from '@angular/material/badge';
 import { HttpClientModule } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { CombatComponent } from './combat/combat.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { InCombatPokemonComponent } from './in-combat-pokemon/in-combat-pokemon.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { PokemonComponent } from './pokemon/pokemon.component';
-import {CombatService} from './combat/combat.service';
-import {PokemonService} from './pokemon/pokemon.service';
+import { CombatService } from './combat/combat.service';
+import { PokemonService } from './pokemon/pokemon.service';
+import { PokemonInformationPanelComponent } from './pokemon-information-panel/pokemon-information-panel.component';
+import { AudioComponent } from './audio/audio.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {PokemonService} from './pokemon/pokemon.service';
     PokemonListComponent,
     CombatComponent,
     PokemonComponent,
-    InCombatPokemonComponent
+    InCombatPokemonComponent,
+    PokemonInformationPanelComponent,
+    AudioComponent
   ],
   imports: [
     BrowserModule,

@@ -9,8 +9,12 @@ import {Intent} from './turn-order.model';
 import {map} from 'rxjs/operators';
 import {Pokemon} from '../pokemon/pokemon.model';
 
+import { CombatState } from './CombatState';
+import { PokemonService } from '../pokemon/pokemon.service';
+import { CombatService } from './combat.service';
+
 @Component({
-  selector: 'app-combat',
+  selector: 'combat',
   templateUrl: './combat.component.html',
   styleUrls: ['./combat.component.scss'],
 })
@@ -18,6 +22,7 @@ export class CombatComponent implements OnInit {
   combatLog = '';
   showLoading = true;
   state: CombatState;
+  audio: boolean = false;
   actions: Move[] = [];
   timeToPickAMove = false;
 
@@ -26,6 +31,10 @@ export class CombatComponent implements OnInit {
     private pokemonSvc: PokemonService,
     private router: Router
   ) {
+    const queryParams = this.router.getCurrentNavigation().extras.queryParams;
+    if (queryParams) {
+      this.audio = queryParams.audio;
+    }
   }
 
   private log(txt: string) {
@@ -70,6 +79,7 @@ export class CombatComponent implements OnInit {
         );
       }
     );
+    // console.log(this.route.snapshot.queryParamMap.get("audio"));
   }
 
   damagePhase(intA: Intent, target: Pokemon): Observable<void> {
