@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { StoreService } from '../store/store.service';
 import { PokemonListService } from './pokemon-list.service';
@@ -25,7 +26,8 @@ export class PokemonListComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     private pokemonListService: PokemonListService,
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    private router: Router
   ) {
     this.storeService.change.subscribe(store => {
       this.myTeam = store.myTeam;
@@ -90,5 +92,9 @@ export class PokemonListComponent implements OnInit {
 
       this.storeService.changeMyTeam(this.myTeam);
     }
+  }
+
+  goToPage(pageName: string): void {
+    this.router.navigate([pageName]);
   }
 }

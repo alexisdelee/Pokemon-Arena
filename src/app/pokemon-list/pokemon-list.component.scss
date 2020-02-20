@@ -1,6 +1,6 @@
 mat-grid-list.selected-pokemon-pool {
   margin: 25px 15px 55px 15px;
-  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.4);
   background: #F5F5F5;
 
   mat-grid-tile {
@@ -32,6 +32,7 @@ mat-grid-list.picker-selected-pokemon-pool {
 
   mat-grid-tile.pokemon-tile {
     cursor: pointer;
+    border-radius: 5px;
 
     &.pokemon-tile-selected {
       // border: 2px solid #ffd740;
@@ -40,7 +41,7 @@ mat-grid-list.picker-selected-pokemon-pool {
     }
 
     &:hover:not(.pokemon-tile-selected) {
-      border: 2px solid #673ab7;
+      border: 2px solid #ffd740;
     }
 
     pokemon {

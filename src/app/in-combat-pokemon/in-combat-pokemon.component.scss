@@ -26,6 +26,7 @@
   left: 20%;
   bottom: 72px;
   scale: 8;
+  -webkit-transform: scale(8);
 }
 
 .enemy-pokemon-sprite {
@@ -33,6 +34,7 @@
   right: 20%;
   top: 175px;
   scale: 6;
+  -webkit-transform: scale(6);
 }
 
 .pokemon-sprite {

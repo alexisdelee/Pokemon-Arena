@@ -17,11 +17,7 @@
     </ng-template>
   </div>
 
-  <mat-grid-tile rowspan="2"></mat-grid-tile>
-
-  <mat-grid-tile rowspan="2" class="versus">VERSUS</mat-grid-tile>
-
-  <mat-grid-tile rowspan="2"></mat-grid-tile>
+  <mat-grid-tile rowspan="2" colspan="3" class="versus">VERSUS</mat-grid-tile>
 
   <div title="Niveau de l'équipe adverse : {{remainingLevelQuota(enemyTeam)}}">
     <div *ngFor="let enemyTeamProkemon of enemyTeam">
@@ -37,7 +33,7 @@
   </mat-grid-tile>
 
   <mat-grid-tile rowspan="1" colspan="9" *ngIf="myTeam.length == 3">
-    <button mat-raised-button color="primary">START</button>
+    <button mat-raised-button color="primary" (click)="goToPage('/combat')">START</button>
   </mat-grid-tile>
 </mat-grid-list>
 
