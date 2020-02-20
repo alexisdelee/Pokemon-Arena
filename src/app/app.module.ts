@@ -25,6 +25,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { InCombatPokemonComponent } from './in-combat-pokemon/in-combat-pokemon.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { PokemonComponent } from './pokemon/pokemon.component';
+import {CombatService} from './combat/combat.service';
+import {PokemonService} from './pokemon/pokemon.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,10 @@ import { PokemonComponent } from './pokemon/pokemon.component';
     HttpClientModule,
     MatProgressBarModule
   ],
-  providers: [],
+  providers: [
+    CombatService,
+    PokemonService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

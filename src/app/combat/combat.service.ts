@@ -9,18 +9,42 @@ import { PokemonService } from '../pokemon/pokemon.service';
   providedIn: 'root',
 })
 export class CombatService {
-  constructor(private pokemonService: PokemonService) { }
+  public state: CombatState;
 
-  getMovesOrder(cs: CombatState): Move[] {
-    const meFirst = [cs.myPokemonIntent, cs.enemyPokemonIntent];
-    const enemyFirst = [cs.enemyPokemonIntent, cs.myPokemonIntent];
+  constructor(private pokemonService: PokemonService) {
+    console.log("OH");
+    this.state = new CombatState();
+  }
 
-    if (cs.myPokemonIntent.priority - cs.enemyPokemonIntent.priority !== 0) {
-      return cs.myPokemonIntent.priority > cs.enemyPokemonIntent.priority ? meFirst : enemyFirst;
+  initTeams(): boolean {
+    if (this.state.enemyTeam.length === 0 || this.state.myTeam.length === 0) {
+      return false;
     }
 
-    const myPokemonSpeed = this.pokemonService.getStatByName(cs.myCurrentPokemon, 'speed');
-    const enemyPokemonSpeed = this.pokemonService.getStatByName(cs.enemyCurrentPokemon, 'speed');
+    this.state.myCurrentPokemon = this.state.myTeam[0];
+    this.state.enemyCurrentPokemon = this.state.enemyTeam[0];
+
+    this.state.myTeam.forEach((pokemon) =>
+      pokemon.hp = this.pokemonService.getPokemonHpMax(pokemon)
+    );
+
+    this.state.enemyTeam.forEach((pokemon) =>
+      pokemon.hp = this.pokemonService.getPokemonHpMax(pokemon)
+    );
+
+    return true;
+  }
+
+  getMovesOrder(cs: CombatState): Move[] {
+    const meFirst = [this.state.myPokemonIntent, this.state.enemyPokemonIntent];
+    const enemyFirst = [this.state.enemyPokemonIntent, this.state.myPokemonIntent];
+
+    if (this.state.myPokemonIntent.priority - this.state.enemyPokemonIntent.priority !== 0) {
+      return this.state.myPokemonIntent.priority > this.state.enemyPokemonIntent.priority ? meFirst : enemyFirst;
+    }
+
+    const myPokemonSpeed = this.pokemonService.getStatByName(this.state.myCurrentPokemon, 'speed');
+    const enemyPokemonSpeed = this.pokemonService.getStatByName(this.state.enemyCurrentPokemon, 'speed');
 
     if (myPokemonSpeed.base_stat === enemyPokemonSpeed.base_stat) {
       return Math.round(Math.random()) === 1 ? meFirst : enemyFirst;

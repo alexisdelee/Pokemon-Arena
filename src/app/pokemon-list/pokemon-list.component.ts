@@ -1,37 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { StoreService } from '../store/store.service';
 import { PokemonListService } from './pokemon-list.service';
 import { PokemonService } from '../pokemon/pokemon.service';
 
 import { Pokemon } from '../pokemon/pokemon.model';
+import {CombatService} from '../combat/combat.service';
 
 @Component({
   selector: 'pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
-  providers: [StoreService, PokemonListService, PokemonService]
+  providers: [PokemonListService]
 })
 export class PokemonListComponent implements OnInit {
   pokemonPool: Pokemon[];
   types: Map<string, string> = new Map<string, string>();
-  myTeam: Pokemon[] = new Array();
-  enemyTeam: Pokemon[] = new Array();
 
   MAX_LEVEL_QUOTA = 150;
 
   private levelQuota = 0;
+  myTeam: Pokemon[];
+  enemyTeam: Pokemon[];
 
   constructor(
-    private storeService: StoreService,
+    private combatSvc: CombatService,
     private pokemonListService: PokemonListService,
     private pokemonService: PokemonService,
     private router: Router
   ) {
-    this.storeService.change.subscribe(store => {
-      this.myTeam = store.myTeam;
-    });
+    this.myTeam = this.combatSvc.state.myTeam;
+    this.enemyTeam = this.combatSvc.state.enemyTeam;
   }
 
   ngOnInit(): void {
@@ -42,10 +41,8 @@ export class PokemonListComponent implements OnInit {
 
         for (let i = 0; i < 3; i++) {
           const r = Math.floor(Math.random() * this.pokemonPool.length - 1) + 1;
-          this.enemyTeam.push(this.pokemonPool[r]);
+          this.combatSvc.state.enemyTeam.push(this.pokemonPool[r]);
         }
-
-        this.storeService.changeEnemyTeam(this.enemyTeam);
       }
     });
   }
@@ -67,16 +64,16 @@ export class PokemonListComponent implements OnInit {
   }
 
   onClickPokemon(event, pokemon: Pokemon): void {
-    if (this.myTeam?.find(myTeamPokemon => myTeamPokemon.id == pokemon.id)) {
+    if (this.combatSvc.state.myTeam.find(myTeamPokemon => myTeamPokemon.id === pokemon.id)) {
       return alert('Impossible d\'ajouter un pokemon déjà existant dans l\'équipe.');
     } else {
-      if (this.myTeam?.length == 3) {
-        const yourFirstSelectedPokemon: Pokemon = this.myTeam[0];
+      if (this.combatSvc.state.myTeam?.length === 3) {
+        const yourFirstSelectedPokemon: Pokemon = this.combatSvc.state.myTeam[0];
         if (this.levelQuota + pokemon.level - yourFirstSelectedPokemon.level > this.MAX_LEVEL_QUOTA) {
           return alert('Vous dépassez le quota autorisé pour cette équipe.');
         } else {
           document.querySelector('.pokemon-tile-' + yourFirstSelectedPokemon.id).classList.remove('pokemon-tile-selected');
-          this.myTeam?.shift();
+          this.combatSvc.state.myTeam?.shift();
           this.levelQuota -= yourFirstSelectedPokemon.level;
         }
       } else {
@@ -87,10 +84,8 @@ export class PokemonListComponent implements OnInit {
 
       this.selectPokemonTile(event.target).classList.add('pokemon-tile-selected');
 
-      this.myTeam?.push(pokemon);
+      this.combatSvc.state.myTeam.push(pokemon);
       this.levelQuota += pokemon.level;
-
-      this.storeService.changeMyTeam(this.myTeam);
     }
   }
 
