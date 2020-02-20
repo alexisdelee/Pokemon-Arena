@@ -38,7 +38,12 @@ export class PokemonListComponent implements OnInit {
     this.pokemonListService.getPokemonPool(27, 600).subscribe({
       next: value => {
         this.pokemonPool = value;
-        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel());
+        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel())
+        this.pokemonPool = this.pokemonPool.sort((pokemonA, pokemonB) => {
+          if (pokemonA.level < pokemonB.level) return -1;
+          else if (pokemonA.level > pokemonB.level) return 1;
+          else return 0;
+        });
 
         for (let i = 0; i < 3; i++) {
           const r = Math.floor(Math.random() * this.pokemonPool.length - 1) + 1;
@@ -67,18 +72,14 @@ export class PokemonListComponent implements OnInit {
   }
 
   onClickPokemon(event, pokemon: Pokemon): void {
-    if (this.myTeam?.find(myTeamPokemon => myTeamPokemon.id == pokemon.id)) {
-      return alert('Impossible d\'ajouter un pokemon déjà existant dans l\'équipe.');
+    if (this.myTeam.find(myTeamPokemon => myTeamPokemon.id == pokemon.id)) {
+      this.selectPokemonTile(event.target).classList.remove('pokemon-tile-selected');
+
+      this.levelQuota -= pokemon.level;
+      this.myTeam = this.myTeam.filter(myTeamPokemon => myTeamPokemon.id != pokemon.id);
     } else {
-      if (this.myTeam?.length == 3) {
-        const yourFirstSelectedPokemon: Pokemon = this.myTeam[0];
-        if (this.levelQuota + pokemon.level - yourFirstSelectedPokemon.level > this.MAX_LEVEL_QUOTA) {
-          return alert('Vous dépassez le quota autorisé pour cette équipe.');
-        } else {
-          document.querySelector('.pokemon-tile-' + yourFirstSelectedPokemon.id).classList.remove('pokemon-tile-selected');
-          this.myTeam?.shift();
-          this.levelQuota -= yourFirstSelectedPokemon.level;
-        }
+      if (this.myTeam.length == 3) {
+        return alert("Vous avez déjà sélectionné 3 pokemons. Veuillez en désélectionner un pour libérer de la place.");
       } else {
         if (this.levelQuota + pokemon.level > this.MAX_LEVEL_QUOTA) {
           return alert('Vous dépassez le quota autorisé pour cette équipe.');
@@ -87,7 +88,7 @@ export class PokemonListComponent implements OnInit {
 
       this.selectPokemonTile(event.target).classList.add('pokemon-tile-selected');
 
-      this.myTeam?.push(pokemon);
+      this.myTeam.push(pokemon);
       this.levelQuota += pokemon.level;
 
       this.storeService.changeMyTeam(this.myTeam);

@@ -6,14 +6,22 @@
           <pokemon [entity]="myTeamPokemon" [minimal]="true"></pokemon>
         </mat-grid-tile>
       </div>
-      <div *ngFor="let emptyTile of initializeEmptyArray(3 - myTeam.length)">
-        <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
+      <div *ngFor="let emptyTile of initializeEmptyArray(3 - myTeam.length); let index = index">
+        <mat-grid-tile rowspan="2" class="selected-pokemon-tile default-selected-pokemon-tile">
+          <h2>{{myTeam.length + index + 1}}</h2>
+        </mat-grid-tile>
       </div>
     </div>
     <ng-template #elseBlock>
-      <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
-      <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
-      <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile default-selected-pokemon-tile">
+        <h2>1</h2>
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile default-selected-pokemon-tile">
+        <h2>2</h2>
+      </mat-grid-tile>
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile default-selected-pokemon-tile">
+        <h2>3</h2>
+      </mat-grid-tile>
     </ng-template>
   </div>
 
