@@ -11,14 +11,14 @@ import { Type } from './Type';
   providers: [PokemonsService]
 })
 export class PokemonsComponent implements OnInit {
+
+  constructor(private pokeSvc: PokemonsService) {}
   pokemons: Pokemon[];
   types: Map<string, string> = new Map<string, string>();
   yourSelectedPokemons: Pokemon[] = new Array();
   selectedEnnemyPokemons: Pokemon[] = new Array();
 
-  private levelQuota: number = 0;
-
-  constructor(private pokeSvc: PokemonsService) {}
+  private levelQuota = 0;
 
   ngOnInit(): void {
     this.pokeSvc.getPokemons(27, 600).subscribe({
@@ -39,11 +39,19 @@ export class PokemonsComponent implements OnInit {
 
   colorForLevel(level: number): string {
     if (level < 25) {
-      return "primary";
+      return 'primary';
     } else if (level > 75) {
-      return "warn";
+      return 'warn';
     } else {
-      return "accent";
+      return 'accent';
+    }
+  }
+
+  private selectPokemonTile(target) {
+    if (target.classList.contains('pokemon-tile')) {
+      return target;
+    } else {
+      return target.closest('.pokemon-tile');
     }
   }
 
@@ -55,34 +63,26 @@ export class PokemonsComponent implements OnInit {
     return selectedPokemons.reduce((acc, item) => acc + item.level, 0);
   }
 
-  private selectPokemonTile(target) {
-    if (target.classList.contains("pokemon-tile")) {
-      return target;
-    } else {
-      return target.closest(".pokemon-tile");
-    }
-  }
-
   onClickPokemon(event, pokemon: Pokemon): void {
-    if (this.yourSelectedPokemons.find(selectPokemon => selectPokemon.id == pokemon.id)) {
-      return alert("impossible d'ajouter un pokemon déjà existant dans l'équipe");
+    if (this.yourSelectedPokemons.find(selectPokemon => selectPokemon.id === pokemon.id)) {
+      return alert('impossible d\'ajouter un pokemon déjà existant dans l\'équipe');
     } else {
-      if (this.yourSelectedPokemons.length == 3) {
+      if (this.yourSelectedPokemons.length === 3) {
         const yourFirstSelectedPokemon: Pokemon = this.yourSelectedPokemons[0];
         if (this.levelQuota + pokemon.level - yourFirstSelectedPokemon.level > 150) {
-          return alert("vous dépassez le quota autorisé pour cette équipe");
+          return alert('vous dépassez le quota autorisé pour cette équipe');
         } else {
-          document.querySelector(".pokemon-tile-" + yourFirstSelectedPokemon.id).classList.remove("pokemon-tile-selected");
+          document.querySelector('.pokemon-tile-' + yourFirstSelectedPokemon.id).classList.remove('pokemon-tile-selected');
           this.yourSelectedPokemons.shift();
           this.levelQuota -= yourFirstSelectedPokemon.level;
         }
       } else {
         if (this.levelQuota + pokemon.level > 150) {
-          return alert("vous dépassez le quota autorisé pour cette équipe");
+          return alert('vous dépassez le quota autorisé pour cette équipe');
         }
       }
 
-      this.selectPokemonTile(event.target).classList.add("pokemon-tile-selected");
+      this.selectPokemonTile(event.target).classList.add('pokemon-tile-selected');
 
       this.yourSelectedPokemons.push(pokemon);
       this.levelQuota += pokemon.level;

@@ -22,6 +22,8 @@ import { AppComponent } from './app.component';
 import { PokemonsComponent } from './pokemons/pokemons.component';
 import { CombatComponent } from './combat/combat.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { InCombatPokemonComponent } from './in-combat-pokemon/in-combat-pokemon.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     PokemonsComponent,
     NavBarComponent,
     PokemonsComponent,
-    CombatComponent
+    CombatComponent,
+    InCombatPokemonComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatMenuModule,
     MatListModule,
     MatBadgeModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

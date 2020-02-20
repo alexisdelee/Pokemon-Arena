@@ -1,25 +1,20 @@
-<mat-grid-list cols="6" style="height: 100%" rowHeight="fit">
-  <mat-grid-tile colspan="6" rowspan="3" class="combat-frame">
-    <mat-card>
-      LOL
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="2" style="background-color: blue">P</mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #a1ff2f">A</mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #ff5410">B</mat-grid-tile>
+<mat-progress-bar *ngIf="showLoading; else elseBlock" mode="query"></mat-progress-bar>
 
-  <mat-grid-tile colspan="2" rowspan="2" style="background-color: rgba(16,16,16,0.85)">
-    <div style="overflow: scroll; height: 100%; width: 100%" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-      <mat-list dense>
-        <mat-list-item *ngFor="let txt of texts" style="color: #c1c1c1">
-          {{txt}}
-        </mat-list-item>
-      </mat-list>
+<mat-grid-list #elseBlock cols="12" style="height: 100%" rowHeight="fit">
+  <mat-grid-tile colspan="9" rowspan="3" class="combat-backgroud" style="background-image: url('/assets/backgrounds/ocean.png')">
+    <div class="combat-circles" style="background-image: url('/assets/backgrounds/ocean_circles.png')">
+      <app-in-combat-pokemon class="bottom-pokemon-container" [pokemon]=combatState.myCurrentPokemon [facing]="false"></app-in-combat-pokemon>
     </div>
   </mat-grid-tile>
 
-  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #aeff27">C</mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1" style="background-color: #0dff9e">D</mat-grid-tile>
-
-
+  <mat-grid-tile colspan="3" rowspan="5" style="background-color: rgba(16,16,16,0.85)">
+    <div class="scroll-box" style="white-space: pre-wrap;" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        {{combatLog}}
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="2" style="background-color: blue">P</mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="1" style="background-color: #a1ff2f">A</mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="1" style="background-color: #ff5410">B</mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="1" style="background-color: #aeff27">C</mat-grid-tile>
+  <mat-grid-tile colspan="3" rowspan="1" style="background-color: #0dff9e">D</mat-grid-tile>
 </mat-grid-list>
