@@ -1,4 +1,4 @@
-export interface IApiID {
+export interface ApiID {
     name: string;
     url: string;
 }

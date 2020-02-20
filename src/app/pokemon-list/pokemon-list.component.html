@@ -1,5 +1,5 @@
 <mat-grid-list cols="9" rowHeight="1:1" class="selected-pokemons">
-  <div title="Niveau de l'équipe : {{remainingLevelQuota(yourSelectedPokemons)}} ({{150 - remainingLevelQuota(yourSelectedPokemons)}} point(s) d'expérience restants)">
+  <div title="Niveau de l'équipe : {{remainingLevelQuota(yourSelectedPokemons)}} ({{MAX_LEVEL_QUOTA - remainingLevelQuota(yourSelectedPokemons)}} point(s) d'expérience restants)">
     <div *ngIf="yourSelectedPokemons.length > 0; else elseBlock">
       <div *ngFor="let yourSelectedPokemon of yourSelectedPokemons">
         <mat-grid-tile class="selected-pokemon-tile">
@@ -35,20 +35,6 @@
 
 <mat-grid-list cols="9" rowHeight="1:1.4" class="picker-pokemons">
   <mat-grid-tile *ngFor="let pokemon of pokemons" (click)="onClickPokemon($event, pokemon)" class="pokemon-tile pokemon-tile-{{pokemon.id}}">
-    <mat-card>
-      <mat-card-header matBadge="{{pokemon.level}}" matBadgeColor="{{this.colorForLevel(pokemon.level)}}">
-        <mat-card-title style="text-overflow: ellipsis; overflow: hidden; width: 70px; white-space: nowrap;" title="{{pokemon.name | titlecase}}">{{pokemon.name | titlecase}}</mat-card-title>
-      </mat-card-header>
-
-      <img src="{{pokemon.sprites.front_default}}">
-
-      <mat-card-content>
-        <mat-grid-list cols="2">
-          <mat-grid-tile *ngFor="let pokemonType of pokemon.types">
-            <img class="pokemon-types" src="{{'assets/types/' + pokemonType.type.name + '.png'}}" title="{{pokemonType.type.name}}">
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-card-content>
-    </mat-card>
+    <pokemon [entity]="pokemon"></pokemon>
   </mat-grid-tile>
 </mat-grid-list>

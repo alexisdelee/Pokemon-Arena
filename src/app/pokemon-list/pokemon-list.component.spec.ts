@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PokemonsComponent } from './pokemons.component';
+import { PokemonListComponent } from './pokemon-list.component';
 
-describe('PokemonsComponent', () => {
+describe('PokemonListComponent', () => {
   let component: PokemonsComponent;
   let fixture: ComponentFixture<PokemonsComponent>;
 

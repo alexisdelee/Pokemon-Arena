@@ -1,30 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonsService } from './pokemons.service';
 
-import { Pokemon } from './Pokemon';
-import { Type } from './Type';
+import { PokemonListService } from './pokemon-list.service';
+import { PokemonService } from '../pokemon/pokemon.service';
+
+import { Pokemon } from '../pokemon/pokemon.model';
+import { Type } from '../pokemon/type.model';
+
+import { PokemonComponent } from '../pokemon/pokemon.component';
 
 @Component({
-  selector: 'app-pokemons',
-  templateUrl: './pokemons.component.html',
-  styleUrls: ['./pokemons.component.scss'],
-  providers: [PokemonsService]
+  selector: 'pokemon-list',
+  templateUrl: './pokemon-list.component.html',
+  styleUrls: ['./pokemon-list.component.scss'],
+  providers: [PokemonListService, PokemonService]
 })
-export class PokemonsComponent implements OnInit {
+export class PokemonListComponent implements OnInit {
   pokemons: Pokemon[];
   types: Map<string, string> = new Map<string, string>();
   yourSelectedPokemons: Pokemon[] = new Array();
   selectedEnnemyPokemons: Pokemon[] = new Array();
 
+  MAX_LEVEL_QUOTA: number = 150;
+
   private levelQuota: number = 0;
 
-  constructor(private pokeSvc: PokemonsService) {}
+  constructor(private pokemonListService: PokemonListService, private pokemonService: PokemonService) {}
 
   ngOnInit(): void {
-    this.pokeSvc.getPokemons(27, 600).subscribe({
+    this.pokemonListService.getPokemons(27, 600).subscribe({
       next: value => {
         this.pokemons = value;
-        this.pokemons.forEach(pokemon => pokemon.level = this.pokeSvc.generateLevel());
+        this.pokemons.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel());
 
         for (let i = 0; i < 3; i++) {
           const r = Math.floor(Math.random() * this.pokemons.length - 1) + 1;
@@ -35,16 +41,6 @@ export class PokemonsComponent implements OnInit {
         console.log(this.remainingLevelQuota(this.selectedEnnemyPokemons));
       }
     });
-  }
-
-  colorForLevel(level: number): string {
-    if (level < 25) {
-      return "primary";
-    } else if (level > 75) {
-      return "warn";
-    } else {
-      return "accent";
-    }
   }
 
   initializeEmptyArray(n: number): Array<void> {
@@ -69,7 +65,7 @@ export class PokemonsComponent implements OnInit {
     } else {
       if (this.yourSelectedPokemons.length == 3) {
         const yourFirstSelectedPokemon: Pokemon = this.yourSelectedPokemons[0];
-        if (this.levelQuota + pokemon.level - yourFirstSelectedPokemon.level > 150) {
+        if (this.levelQuota + pokemon.level - yourFirstSelectedPokemon.level > this.MAX_LEVEL_QUOTA) {
           return alert("vous dépassez le quota autorisé pour cette équipe");
         } else {
           document.querySelector(".pokemon-tile-" + yourFirstSelectedPokemon.id).classList.remove("pokemon-tile-selected");

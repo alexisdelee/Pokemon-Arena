@@ -1,15 +1,15 @@
-import {IApiID} from './IApiID';
-import {Type} from './Type';
+import { ApiID } from './apiid.model';
+import { Type } from './type.model';
 
 interface EffectEntry {
     effect: string;
     short_effect: string;
-    language: IApiID;
+    language: ApiID;
 }
 
 interface Meta {
-    ailment: IApiID;
-    category: IApiID;
+    ailment: ApiID;
+    category: ApiID;
     min_hits?: any;
     max_hits?: any;
     min_turns?: any;
@@ -24,7 +24,7 @@ interface Meta {
 
 interface Name {
     name: string;
-    language: IApiID;
+    language: ApiID;
 }
 
 interface SuperContestEffect {
@@ -33,19 +33,19 @@ interface SuperContestEffect {
 
 interface FlavorTextEntry {
     flavor_text: string;
-    language: IApiID;
-    version_group: IApiID;
+    language: ApiID;
+    version_group: ApiID;
 }
 
 export interface MoveVersionGroupDetail {
     level_learned_at: number;
-    version_group: IApiID;
-    move_learn_method: IApiID;
+    version_group: ApiID;
+    move_learn_method: ApiID;
 }
 
 export interface Move {
     id: number;
-    move: IApiID;
+    move: ApiID;
     version_group_details: MoveVersionGroupDetail[];
     name: string;
     accuracy: number;
@@ -53,16 +53,16 @@ export interface Move {
     pp: number;
     priority: number;
     power: number;
-    damage_class: IApiID;
+    damage_class: ApiID;
     effect_entries: EffectEntry[];
     effect_changes: any[];
-    generation: IApiID;
+    generation: ApiID;
     meta: Meta;
     names: Name[];
     past_values: any[];
     stat_changes: any[];
     super_contest_effect: SuperContestEffect;
-    target: IApiID;
+    target: ApiID;
     type: Type;
     flavor_text_entries: FlavorTextEntry[];
 }
