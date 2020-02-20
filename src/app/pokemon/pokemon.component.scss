@@ -4,15 +4,32 @@ mat-card {
   margin: 0;
   padding: 0;
 
+  mat-card-header {
+    position: relative;
+    top: 2px;
+    left: -2px;
+
+    mat-card-title {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 70px;
+      white-space: nowrap;
+    }
+  }
+
   mat-card-title {
     font-size: 15px;
     margin-left: 0;
     margin-right: 0;
   }
 
-  img {
-    min-width: 96px;
-    height: auto;
+  div.pokemon-sprite {
+    text-align: center;
+
+    img {
+      min-width: 96px;
+      height: auto;
+    }
   }
 
   mat-card-content {

@@ -12,6 +12,7 @@ import { Pokemon } from './pokemon.model';
 })
 export class PokemonComponent implements OnInit {
   @Input() entity: Pokemon;
+  @Input() minimal: boolean = false;
 
   constructor(private pokeSvc: PokemonListService) {}
 
