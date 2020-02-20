@@ -1,4 +1,4 @@
-mat-grid-list.selected-pokemons {
+mat-grid-list.selected-pokemon-pool {
   margin: 25px 15px 55px 15px;
   box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
   background: #F5F5F5;
@@ -17,10 +17,16 @@ mat-grid-list.selected-pokemons {
       font-size: 35px;
       font-weight: bold;
     }
+
+    &.explication {
+      h2 {
+        margin: 0 !important;
+      }
+    }
   }
 }
 
-mat-grid-list.picker-pokemons {
+mat-grid-list.picker-selected-pokemon-pool {
   // height: 100%;
   margin: 25px 0;
 
@@ -28,7 +34,9 @@ mat-grid-list.picker-pokemons {
     cursor: pointer;
 
     &.pokemon-tile-selected {
-      border: 2px solid #ffd740;
+      // border: 2px solid #ffd740;
+      filter: grayscale(100%);
+      border: 2px solid gray;
     }
 
     &:hover:not(.pokemon-tile-selected) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { StoreService } from '../store/store.service';
 import { PokemonListService } from './pokemon-list.service';
 import { PokemonService } from '../pokemon/pokemon.service';
 
@@ -12,19 +13,27 @@ import { PokemonComponent } from '../pokemon/pokemon.component';
   selector: 'pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
-  providers: [PokemonListService, PokemonService]
+  providers: [StoreService, PokemonListService, PokemonService]
 })
 export class PokemonListComponent implements OnInit {
   pokemonPool: Pokemon[];
   types: Map<string, string> = new Map<string, string>();
-  yourSelectedPokemons: Pokemon[] = new Array();
-  selectedEnnemyPokemons: Pokemon[] = new Array();
+  myTeam: Pokemon[] = new Array();
+  enemyTeam: Pokemon[] = new Array();
 
   MAX_LEVEL_QUOTA: number = 150;
 
   private levelQuota: number = 0;
 
-  constructor(private pokemonListService: PokemonListService, private pokemonService: PokemonService) {}
+  constructor(
+    private storeService: StoreService,
+    private pokemonListService: PokemonListService,
+    private pokemonService: PokemonService
+  ) {
+    this.storeService.change.subscribe(store => {
+      this.myTeam = store.myTeam;
+    });
+  }
 
   ngOnInit(): void {
     this.pokemonListService.getPokemonPool(27, 600).subscribe({
@@ -34,11 +43,10 @@ export class PokemonListComponent implements OnInit {
 
         for (let i = 0; i < 3; i++) {
           const r = Math.floor(Math.random() * this.pokemonPool.length - 1) + 1;
-          this.selectedEnnemyPokemons.push(this.pokemonPool[r]);
+          this.enemyTeam.push(this.pokemonPool[r]);
         }
 
-        console.log(this.selectedEnnemyPokemons);
-        console.log(this.remainingLevelQuota(this.selectedEnnemyPokemons));
+        this.storeService.changeEnemyTeam(this.enemyTeam);
       }
     });
   }
@@ -47,8 +55,8 @@ export class PokemonListComponent implements OnInit {
     return new Array(n);
   }
 
-  remainingLevelQuota(selectedPokemons: Pokemon[]): number {
-    return selectedPokemons.reduce((acc, item) => acc + item.level, 0);
+  remainingLevelQuota(team: Pokemon[]): number {
+    return team.reduce((acc, item) => acc + item.level, 0);
   }
 
   private selectPokemonTile(target) {
@@ -60,28 +68,30 @@ export class PokemonListComponent implements OnInit {
   }
 
   onClickPokemon(event, pokemon: Pokemon): void {
-    if (this.yourSelectedPokemons.find(selectPokemon => selectPokemon.id == pokemon.id)) {
-      return alert("impossible d'ajouter un pokemon déjà existant dans l'équipe");
+    if (this.myTeam?.find(myTeamPokemon => myTeamPokemon.id == pokemon.id)) {
+      return alert("Impossible d'ajouter un pokemon déjà existant dans l'équipe.");
     } else {
-      if (this.yourSelectedPokemons.length == 3) {
-        const yourFirstSelectedPokemon: Pokemon = this.yourSelectedPokemons[0];
+      if (this.myTeam?.length == 3) {
+        const yourFirstSelectedPokemon: Pokemon = this.myTeam[0];
         if (this.levelQuota + pokemon.level - yourFirstSelectedPokemon.level > this.MAX_LEVEL_QUOTA) {
-          return alert("vous dépassez le quota autorisé pour cette équipe");
+          return alert("Vous dépassez le quota autorisé pour cette équipe.");
         } else {
           document.querySelector(".pokemon-tile-" + yourFirstSelectedPokemon.id).classList.remove("pokemon-tile-selected");
-          this.yourSelectedPokemons.shift();
+          this.myTeam?.shift();
           this.levelQuota -= yourFirstSelectedPokemon.level;
         }
       } else {
-        if (this.levelQuota + pokemon.level > 150) {
-          return alert("vous dépassez le quota autorisé pour cette équipe");
+        if (this.levelQuota + pokemon.level > this.MAX_LEVEL_QUOTA) {
+          return alert("Vous dépassez le quota autorisé pour cette équipe.");
         }
       }
 
       this.selectPokemonTile(event.target).classList.add("pokemon-tile-selected");
 
-      this.yourSelectedPokemons.push(pokemon);
+      this.myTeam?.push(pokemon);
       this.levelQuota += pokemon.level;
+
+      this.storeService.changeMyTeam(this.myTeam);
     }
   }
 }

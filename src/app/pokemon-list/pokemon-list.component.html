@@ -1,40 +1,48 @@
-<mat-grid-list cols="9" rowHeight="1:1" class="selected-pokemonPool">
-  <div title="Niveau de l'équipe : {{remainingLevelQuota(yourSelectedPokemons)}} ({{MAX_LEVEL_QUOTA - remainingLevelQuota(yourSelectedPokemons)}} point(s) d'expérience restants)">
-    <div *ngIf="yourSelectedPokemons.length > 0; else elseBlock">
-      <div *ngFor="let yourSelectedPokemon of yourSelectedPokemons">
-        <mat-grid-tile class="selected-pokemon-tile">
-          <img src="{{yourSelectedPokemon.sprites.front_default}}">
+<mat-grid-list cols="9" rowHeight="2:1" class="selected-pokemon-pool">
+  <div>
+    <div *ngIf="myTeam.length > 0; else elseBlock">
+      <div *ngFor="let myTeamPokemon of myTeam">
+        <mat-grid-tile rowspan="2" class="selected-pokemon-tile">
+          <pokemon [entity]="myTeamPokemon" [minimal]="true"></pokemon>
         </mat-grid-tile>
       </div>
-      <div *ngFor="let emptyTile of initializeEmptyArray(3 - yourSelectedPokemons.length)">
-        <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
+      <div *ngFor="let emptyTile of initializeEmptyArray(3 - myTeam.length)">
+        <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
       </div>
     </div>
     <ng-template #elseBlock>
-      <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
-      <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
-      <mat-grid-tile class="selected-pokemon-tile"></mat-grid-tile>
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile"></mat-grid-tile>
     </ng-template>
   </div>
 
-  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile rowspan="2"></mat-grid-tile>
 
-  <mat-grid-tile class="versus">VERSUS</mat-grid-tile>
+  <mat-grid-tile rowspan="2" class="versus">VERSUS</mat-grid-tile>
 
-  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile rowspan="2"></mat-grid-tile>
 
-  <div title="Niveau de l'équipe : {{remainingLevelQuota(selectedEnnemyPokemons)}}">
-    <div *ngFor="let selectedEnnemyPokemon of selectedEnnemyPokemons">
-      <mat-grid-tile class="selected-pokemon-tile">
+  <div title="Niveau de l'équipe adverse : {{remainingLevelQuota(enemyTeam)}}">
+    <div *ngFor="let enemyTeamProkemon of enemyTeam">
+      <mat-grid-tile rowspan="2" class="selected-pokemon-tile">
         <img class="secret" src="assets/secret.png">
-        <img src="{{selectedEnnemyPokemon.sprites.front_default}}" style="filter: grayscale(100%) blur(3px);">
+        <img src="{{enemyTeamProkemon.sprites.front_default}}" style="filter: grayscale(100%) blur(3px);">
       </mat-grid-tile>
     </div>
   </div>
+
+  <mat-grid-tile rowspan="1" colspan="9" class="explication">
+    <h2>Vous devez sélectionner 3 pokemons pour un maximum de {{MAX_LEVEL_QUOTA}} points de niveau (points restants : {{MAX_LEVEL_QUOTA - remainingLevelQuota(myTeam)}}).</h2>
+  </mat-grid-tile>
+
+  <mat-grid-tile rowspan="1" colspan="9" *ngIf="myTeam.length == 3">
+    <button mat-raised-button color="primary">START</button>
+  </mat-grid-tile>
 </mat-grid-list>
 
-<mat-grid-list cols="9" rowHeight="1:1.4" class="picker-pokemonPool">
+<mat-grid-list cols="9" rowHeight="1:1.4" class="picker-selected-pokemon-pool">
   <mat-grid-tile *ngFor="let pokemon of pokemonPool" (click)="onClickPokemon($event, pokemon)" class="pokemon-tile pokemon-tile-{{pokemon.id}}">
-    <pokemon [entity]="pokemon"></pokemon>
+    <pokemon [entity]="pokemon" [minimal]="false"></pokemon>
   </mat-grid-tile>
 </mat-grid-list>
