@@ -1,4 +1,4 @@
-import {IApiID} from './IApiID';
+import { ApiID } from './apiid.model';
 
 interface NoDamageTo {
   name: string;
@@ -41,18 +41,18 @@ interface DamageRelations {
 
 interface GameIndice {
   game_index: number;
-  generation: IApiID;
+  generation: ApiID;
 }
 
 interface Name {
   name: string;
-  language: IApiID;
+  language: ApiID;
 }
 
 export interface Type {
   id: number;
   slot: number;
-  type: IApiID;
+  type: ApiID;
   name: string;
   damage_relations: DamageRelations;
   game_indices: GameIndice[];

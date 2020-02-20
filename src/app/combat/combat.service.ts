@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import {CombatState} from './CombatState';
-import {Move} from '../pokemons/Move';
-import {PokemonsService} from '../pokemons/pokemons.service';
+
+import { CombatState } from './CombatState';
+import { Move } from '../pokemon/move.model';
+
+import { PokemonService } from '../pokemon/pokemon.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CombatService {
-
-  constructor(private pokeSvc: PokemonsService) { }
+  constructor(private pokemonService: PokemonService) { }
 
   getMovesOrder(cs: CombatState): Move[] {
     const meFirst = [cs.myPokemonIntent, cs.enemyPokemonIntent];
@@ -18,8 +19,8 @@ export class CombatService {
       return cs.myPokemonIntent.priority > cs.enemyPokemonIntent.priority ? meFirst : enemyFirst;
     }
 
-    const myPokemonSpeed = this.pokeSvc.getStatByName(cs.myCurrentPokemon, 'speed');
-    const enemyPokemonSpeed = this.pokeSvc.getStatByName(cs.enemyCurrentPokemon, 'speed');
+    const myPokemonSpeed = this.pokemonService.getStatByName(cs.myCurrentPokemon, 'speed');
+    const enemyPokemonSpeed = this.pokemonService.getStatByName(cs.enemyCurrentPokemon, 'speed');
 
     if (myPokemonSpeed.base_stat === enemyPokemonSpeed.base_stat) {
       return Math.round(Math.random()) === 1 ? meFirst : enemyFirst;
@@ -77,5 +78,4 @@ export class CombatService {
   }
 
  */
-
 }

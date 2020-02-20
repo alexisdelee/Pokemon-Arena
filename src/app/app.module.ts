@@ -19,19 +19,20 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PokemonsComponent } from './pokemons/pokemons.component';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { CombatComponent } from './combat/combat.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InCombatPokemonComponent } from './in-combat-pokemon/in-combat-pokemon.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { PokemonComponent } from './pokemon/pokemon.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonsComponent,
     NavBarComponent,
-    PokemonsComponent,
+    PokemonListComponent,
     CombatComponent,
+    PokemonComponent
     InCombatPokemonComponent
   ],
   imports: [

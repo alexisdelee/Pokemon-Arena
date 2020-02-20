@@ -1,25 +1,25 @@
-import {IApiID} from './IApiID';
-import {Move} from './Move';
-import {Type} from './Type';
+import { ApiID } from './apiid.model';
+import { Move } from './move.model';
+import { Type } from './type.model';
 
 export interface Ability {
     is_hidden: boolean;
     slot: number;
-    ability: IApiID;
+    ability: ApiID;
 }
 
 export interface GameIndice {
     game_index: number;
-    version: IApiID;
+    version: ApiID;
 }
 
 export interface HeldItemVersionDetail {
     rarity: number;
-    version: IApiID;
+    version: ApiID;
 }
 
 export interface HeldItem {
-    item: IApiID;
+    item: ApiID;
     version_details: HeldItemVersionDetail[];
 }
 
@@ -37,7 +37,7 @@ export interface Sprites {
 export interface Stat {
     base_stat: number;
     effort: number;
-    stat: IApiID;
+    stat: ApiID;
 }
 
 export interface Pokemon {
@@ -51,11 +51,11 @@ export interface Pokemon {
     order: number;
     weight: number;
     abilities: Ability[];
-    forms: IApiID[];
+    forms: ApiID[];
     game_indices: GameIndice[];
     held_items: HeldItem[];
     moves: Move[];
-    species: IApiID;
+    species: ApiID;
     sprites: Sprites;
     stats: Stat[];
     types: Type[];
