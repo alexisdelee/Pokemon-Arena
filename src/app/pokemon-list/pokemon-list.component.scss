@@ -7,6 +7,12 @@ mat-grid-list.selected-pokemon-pool {
     &.selected-pokemon-tile {
       border: 2px solid gray;
 
+      &.default-selected-pokemon-tile {
+        h2 {
+          font-size: 30px;
+        }
+      }
+
       img.secret {
         position: absolute;
         z-index: 100;
