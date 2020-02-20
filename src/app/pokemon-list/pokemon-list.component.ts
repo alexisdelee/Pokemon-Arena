@@ -15,7 +15,7 @@ import { PokemonComponent } from '../pokemon/pokemon.component';
   providers: [PokemonListService, PokemonService]
 })
 export class PokemonListComponent implements OnInit {
-  pokemons: Pokemon[];
+  pokemonPool: Pokemon[];
   types: Map<string, string> = new Map<string, string>();
   yourSelectedPokemons: Pokemon[] = new Array();
   selectedEnnemyPokemons: Pokemon[] = new Array();
@@ -27,14 +27,14 @@ export class PokemonListComponent implements OnInit {
   constructor(private pokemonListService: PokemonListService, private pokemonService: PokemonService) {}
 
   ngOnInit(): void {
-    this.pokemonListService.getPokemons(27, 600).subscribe({
+    this.pokemonListService.getPokemonPool(27, 600).subscribe({
       next: value => {
-        this.pokemons = value;
-        this.pokemons.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel());
+        this.pokemonPool = value;
+        this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateLevel());
 
         for (let i = 0; i < 3; i++) {
-          const r = Math.floor(Math.random() * this.pokemons.length - 1) + 1;
-          this.selectedEnnemyPokemons.push(this.pokemons[r]);
+          const r = Math.floor(Math.random() * this.pokemonPool.length - 1) + 1;
+          this.selectedEnnemyPokemons.push(this.pokemonPool[r]);
         }
 
         console.log(this.selectedEnnemyPokemons);

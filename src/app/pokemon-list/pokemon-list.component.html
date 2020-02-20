@@ -1,4 +1,4 @@
-<mat-grid-list cols="9" rowHeight="1:1" class="selected-pokemons">
+<mat-grid-list cols="9" rowHeight="1:1" class="selected-pokemonPool">
   <div title="Niveau de l'équipe : {{remainingLevelQuota(yourSelectedPokemons)}} ({{MAX_LEVEL_QUOTA - remainingLevelQuota(yourSelectedPokemons)}} point(s) d'expérience restants)">
     <div *ngIf="yourSelectedPokemons.length > 0; else elseBlock">
       <div *ngFor="let yourSelectedPokemon of yourSelectedPokemons">
@@ -33,8 +33,8 @@
   </div>
 </mat-grid-list>
 
-<mat-grid-list cols="9" rowHeight="1:1.4" class="picker-pokemons">
-  <mat-grid-tile *ngFor="let pokemon of pokemons" (click)="onClickPokemon($event, pokemon)" class="pokemon-tile pokemon-tile-{{pokemon.id}}">
+<mat-grid-list cols="9" rowHeight="1:1.4" class="picker-pokemonPool">
+  <mat-grid-tile *ngFor="let pokemon of pokemonPool" (click)="onClickPokemon($event, pokemon)" class="pokemon-tile pokemon-tile-{{pokemon.id}}">
     <pokemon [entity]="pokemon"></pokemon>
   </mat-grid-tile>
 </mat-grid-list>

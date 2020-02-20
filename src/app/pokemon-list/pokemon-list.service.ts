@@ -10,7 +10,7 @@ import { PokemonService } from '../pokemon/pokemon.service';
 export class PokemonListService {
   constructor(private http: HttpClient, private pokemonService: PokemonService) {}
 
-  getPokemons(n: number, maxId: number): Observable<Pokemon[]> {
+  getPokemonPool(n: number, maxId: number): Observable<Pokemon[]> {
     const arr = [];
     const numArray = [];
 
