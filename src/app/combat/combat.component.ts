@@ -2,14 +2,12 @@ import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnI
 import {Router, ActivatedRoute} from '@angular/router';
 import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-
 import {CombatState} from './CombatState';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {CombatService} from './combat.service';
 import {Move} from '../pokemon/move.model';
 import {Intent} from './turn-order.model';
 import {Pokemon} from '../pokemon/pokemon.model';
-import {InCombatPokemonComponent} from '../in-combat-pokemon/in-combat-pokemon.component';
 
 @Component({
   templateUrl: './combat.component.html',

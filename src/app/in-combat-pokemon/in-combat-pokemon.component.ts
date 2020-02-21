@@ -6,25 +6,25 @@ import { PokemonService } from '../pokemon/pokemon.service';
 @Component({
   selector: 'in-combat-pokemon',
   templateUrl: './in-combat-pokemon.component.html',
-  styleUrls: ['./in-combat-pokemon.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./in-combat-pokemon.component.scss']
 })
 export class InCombatPokemonComponent implements OnInit, OnChanges {
   @Input() pokemon: Pokemon;
   @Input() facing: boolean;
-  hpMax: number;
   imageUrl: string;
 
   constructor(private pokemonSvc: PokemonService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.pokemon = changes.pokemon.currentValue;
-    console.log(this.pokemon);
-    this.ngOnInit();
+    if (!changes || !changes.pokemon) {
+      return;
+    }
+
+    const newPokemon: Pokemon = changes.pokemon.currentValue;
+    this.imageUrl = 'http://www.pokestadium.com/sprites/xy/' + (this.facing ? '' : 'back/') + newPokemon.name + '.gif';
   }
 
   ngOnInit(): void {
-    this.hpMax = this.pokemonSvc.getPokemonHpMax(this.pokemon);
     this.imageUrl = 'http://www.pokestadium.com/sprites/xy/' + (this.facing ? '' : 'back/') + this.pokemon.name + '.gif';
   }
 
