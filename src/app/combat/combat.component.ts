@@ -9,12 +9,7 @@ import {Intent} from './turn-order.model';
 import {map} from 'rxjs/operators';
 import {Pokemon} from '../pokemon/pokemon.model';
 
-import { CombatState } from './CombatState';
-import { PokemonService } from '../pokemon/pokemon.service';
-import { CombatService } from './combat.service';
-
 @Component({
-  selector: 'combat',
   templateUrl: './combat.component.html',
   styleUrls: ['./combat.component.scss'],
 })
@@ -22,8 +17,7 @@ export class CombatComponent implements OnInit {
   combatLog = '';
   showLoading = true;
   state: CombatState;
-  audio: boolean = false;
-  actions: Move[] = [];
+  audio = false;
   timeToPickAMove = false;
 
   constructor(

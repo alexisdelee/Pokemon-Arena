@@ -3,12 +3,12 @@ import { Howl, Howler } from 'howler';
 
 @Component({
   selector: 'audio',
-  templateUrl: './audio.component.html',
-  styleUrls: ['./audio.component.scss']
+  template: ``,
+  styles: [''],
 })
 export class AudioComponent implements OnInit, OnDestroy {
   sound = new Howl({
-    src: ["assets/music.mp3"],
+    src: ["assets/music-2.mp3"],
     loop: true,
     volume: 0.5
   });
