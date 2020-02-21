@@ -27,3 +27,14 @@
 .top-pokemon-container {
   width: 100%;
 }
+
+mat-grid-tile.moves {
+  background: #DDEAA2;
+  border: 5px solid red;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover {
+    filter: grayscale(100%);
+  }
+}

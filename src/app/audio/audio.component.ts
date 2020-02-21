@@ -8,7 +8,7 @@ import { Howl, Howler } from 'howler';
 })
 export class AudioComponent implements OnInit, OnDestroy {
   sound = new Howl({
-    src: ["assets/music-2.mp3"],
+    src: [(Math.random() >= 0.5 ? "assets/music.mp3" : "assets/music-2.mp3")],
     loop: true,
     volume: 0.5
   });

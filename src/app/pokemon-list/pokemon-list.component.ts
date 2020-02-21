@@ -23,7 +23,7 @@ export class PokemonListComponent implements OnInit {
   myTeam: Pokemon[];
   enemyTeam: Pokemon[];
 
-  audio: boolean = false;
+  audio: boolean = true;
 
   constructor(
     private combatSvc: CombatService,
@@ -41,8 +41,9 @@ export class PokemonListComponent implements OnInit {
         this.pokemonPool = value;
         this.pokemonPool.forEach(pokemon => pokemon.level = this.pokemonService.generateRandomLevel());
         this.pokemonPool = this.pokemonPool.sort((pokemonA, pokemonB) => {
-          return pokemonA.level - pokemonB.level > 1 ? -1 : pokemonA.level - pokemonB.level === 0 ? 0 : 1;
-        });
+          // return pokemonA.level - pokemonB.level > 1 ? -1 : pokemonA.level - pokemonB.level === 0 ? 0 : 1;
+          return pokemonA.level < pokemonB.level ? -1 : (pokemonA.level > pokemonB.level ? 1 : 0);
+        }).reverse();
 
         for (let i = 0; i < 3; i++) {
           const r = Math.floor(Math.random() * this.pokemonPool.length - 1) + 1;

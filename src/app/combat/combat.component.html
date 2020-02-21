@@ -1,7 +1,6 @@
 <audio *ngIf="audio"></audio>
 
 <mat-progress-bar *ngIf="showLoading; else elseBlock" mode="query"></mat-progress-bar>
-
 <ng-template #elseBlock>
   <mat-grid-list cols="12" style="height: 100%" rowHeight="fit">
     <mat-grid-tile colspan="9" rowspan="3" class="combat-backgroud" style="background-image: url('/assets/backgrounds/ocean.png')">
@@ -52,6 +51,8 @@
         style="background-color: #ededed">
         {{state.myCurrentPokemon.pickedMoves[3].name | titlecase}}
       </button>
+    <!-- <mat-grid-tile colspan="3" rowspan="1" class="moves" *ngFor="let yourRandomSelectedMove of yourRandomSelectedMoves">
+      <move [move]="yourRandomSelectedMove"></move> -->
     </mat-grid-tile>
   </mat-grid-list>
 </ng-template>

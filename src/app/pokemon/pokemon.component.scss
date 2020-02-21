@@ -37,8 +37,12 @@ mat-card {
       min-width: 100%;
 
       img.pokemon-types {
-        height: 30px;
-        -webkit-transform: scale(2.5);
+        // height: 30px;
+        // -webkit-transform: scale(2.5);
+        // transform: scale(2.5);
+        height: 27px;
+        min-width: auto;
+        margin-top: -30px;
       }
     }
   }

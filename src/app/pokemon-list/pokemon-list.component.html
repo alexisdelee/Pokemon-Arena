@@ -41,7 +41,7 @@
   </mat-grid-tile>
 
   <mat-grid-tile rowspan="1" colspan="9">
-    <input type="checkbox" id="auto-audio" (change)="audio = $event.target.checked"><label for="auto-audio">Play music automatically at the start of each fight</label>
+    <input type="checkbox" id="auto-audio" [checked]="audio" (change)="audio = $event.target.checked"><label for="auto-audio">Play music automatically at the start of each fight</label>
   </mat-grid-tile>
 
   <mat-grid-tile rowspan="1" colspan="9" *ngIf="myTeam.length == 3">

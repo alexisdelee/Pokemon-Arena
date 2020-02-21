@@ -1,12 +1,13 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {forkJoin, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+
 import {CombatState} from './CombatState';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {CombatService} from './combat.service';
-import {Router} from '@angular/router';
-import {forkJoin, Observable} from 'rxjs';
 import {Move} from '../pokemon/move.model';
 import {Intent} from './turn-order.model';
-import {map} from 'rxjs/operators';
 import {Pokemon} from '../pokemon/pokemon.model';
 import {InCombatPokemonComponent} from '../in-combat-pokemon/in-combat-pokemon.component';
 
@@ -21,20 +22,23 @@ export class CombatComponent implements OnInit {
   audio = false;
   timeToPickAMove = false;
 
+  // TODO: do something with this variable
+  yourRandomSelectedMoves: Move[] = new Array();
+
   constructor(
     private combatSvc: CombatService,
     private pokemonSvc: PokemonService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private componentResolver: ComponentFactoryResolver
-  ) {
-    const queryParams = this.router.getCurrentNavigation().extras.queryParams;
-    if (queryParams) {
-      this.audio = queryParams.audio;
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
     this.state = this.combatSvc.state;
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.audio = params.audio === "true";
+    });
 
     forkJoin([
       this.pokemonSvc.findPokemon(78),
@@ -161,5 +165,14 @@ export class CombatComponent implements OnInit {
   private playMyTurn(): void {
     this.timeToPickAMove = true;
     this.log(`YOUR TURN =============== \nChoose a move !`);
+
+    for (let i = 0; i < 4; i++) {
+      this.yourRandomSelectedMoves.push((() => {
+        const r = Math.floor(Math.random() * this.state.myCurrentPokemon.moves.length);
+        return this.state.myCurrentPokemon.moves[r]
+      })());
+    }
+
+    console.log(this.yourRandomSelectedMoves);
   }
 }
