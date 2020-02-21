@@ -1,11 +1,11 @@
-<mat-grid-list cols="3" rowHeight="2:1.5" [ngClass]="move.type.name">
-  <mat-grid-tile colspan="3">{{move.name}}</mat-grid-tile>
+<mat-grid-list cols="5" rowHeight="2:1.5" [ngClass]="move.type.name">
+  <mat-grid-tile style="font-weight: bold" colspan="5"><h1 style="font-weight: bold; text-align: center">{{move.name | titlecase}}</h1></mat-grid-tile>
 
-  <mat-grid-tile colspan="1" class="type">
+  <mat-grid-tile colspan="1" rowspan="2" class="type">
     <p>{{move.type.name.toUpperCase()}}</p>
   </mat-grid-tile>
-  <mat-grid-tile colspan="1">
-    <strong>PP</strong>
+  <mat-grid-tile colspan="3" rowspan="2">
+    {{move.text}}
   </mat-grid-tile>
-  <mat-grid-tile colspan="1">?? / ??</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="2">?? / {{move.pp}} PP</mat-grid-tile>
 </mat-grid-list>

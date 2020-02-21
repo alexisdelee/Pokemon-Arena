@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CombatService} from '../combat/combat.service';
 import {Pokemon} from '../pokemon/pokemon.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {forkJoin} from 'rxjs';
 import {Move} from '../move/move.model';
@@ -16,7 +16,12 @@ export class MovePickerComponent implements OnInit {
   math = Math;
   enemyTeam: Pokemon[];
 
-  constructor(private combatSvc: CombatService, private pokemonSvc: PokemonService, private router: Router) {}
+  constructor(
+    private combatSvc: CombatService,
+    private pokemonSvc: PokemonService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     if (!this.combatSvc.initTeams()) {
@@ -77,7 +82,7 @@ export class MovePickerComponent implements OnInit {
 
       return;
     }
-    
+
     this.selectPokemonTile(event.target).classList.add('move-picked');
     pokemon.pickedMoves.push(move);
   }
@@ -97,6 +102,8 @@ export class MovePickerComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['/combat']);
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.router.navigate(['/combat'], {queryParams: {audio: params.audio}});
+    });
   }
 }

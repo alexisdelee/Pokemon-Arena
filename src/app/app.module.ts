@@ -44,8 +44,9 @@ import { DialogPokemonListComponent } from './dialog-pokemon-list/dialog-pokemon
     InCombatPokemonComponent,
     PokemonInformationPanelComponent,
     AudioComponent,
-    DialogPokemonListComponent
-    MovePickerComponent
+    DialogPokemonListComponent,
+    MovePickerComponent,
+    MoveComponent
   ],
   imports: [
     BrowserModule,

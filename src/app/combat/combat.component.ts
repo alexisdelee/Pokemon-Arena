@@ -3,7 +3,6 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-
 import {CombatState} from './CombatState';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {CombatService} from './combat.service';
