@@ -18,6 +18,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { PokemonInformationPanelComponent } from './pokemon-information-panel/po
 import { AudioComponent } from './audio/audio.component';
 import { MoveComponent } from './move/move.component';
 import { MovePickerComponent } from './move-picker/move-picker.component';
+import { DialogPokemonListComponent } from './dialog-pokemon-list/dialog-pokemon-list.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { MovePickerComponent } from './move-picker/move-picker.component';
     InCombatPokemonComponent,
     PokemonInformationPanelComponent,
     AudioComponent,
-    MoveComponent,
+    DialogPokemonListComponent
     MovePickerComponent
   ],
   imports: [
@@ -61,12 +63,14 @@ import { MovePickerComponent } from './move-picker/move-picker.component';
     MatListModule,
     MatBadgeModule,
     HttpClientModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [
     CombatService,
     PokemonService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogPokemonListComponent]
 })
 export class AppModule { }

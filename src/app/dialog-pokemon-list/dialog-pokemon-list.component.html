@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Choose your next pokemon:</h2>
+
+<mat-dialog-content class="mat-typography">
+  <!-- <ul>
+    <li *ngFor="let pokemon of getAllAlivePokemonsInMyTeam()">{{pokemon.name}}</li>
+  </ul> -->
+
+  <mat-grid-list cols="2" rowHeight="1:2">
+    <mat-grid-tile *ngFor="let pokemon of getAllAlivePokemonsInMyTeam()">
+      <pokemon [entity]="pokemon" (click)="save(pokemon)"></pokemon>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-dialog-content>

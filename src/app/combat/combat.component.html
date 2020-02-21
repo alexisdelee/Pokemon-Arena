@@ -15,7 +15,9 @@
         {{combatLog}}
       </div>
     </mat-grid-tile>
-    <mat-grid-tile colspan="3" rowspan="2" style="background-color: blue">P</mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="2" style="background-color: blue">
+      <button mat-button (click)="openDialog()">Swap pokemon</button>
+    </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspan="1" class="moves" *ngFor="let move of state.myCurrentPokemon.pickedMoves">
       <move [move]="move" (click)="pickAMove(move)"></move>
     </mat-grid-tile>
