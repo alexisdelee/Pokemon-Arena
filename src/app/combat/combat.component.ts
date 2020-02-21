@@ -22,9 +22,6 @@ export class CombatComponent implements OnInit {
   audio = false;
   timeToPickAMove = false;
 
-  // TODO: do something with this variable
-  yourRandomSelectedMoves: Move[] = new Array();
-
   constructor(
     private combatSvc: CombatService,
     private pokemonSvc: PokemonService,
@@ -165,14 +162,5 @@ export class CombatComponent implements OnInit {
   private playMyTurn(): void {
     this.timeToPickAMove = true;
     this.log(`YOUR TURN =============== \nChoose a move !`);
-
-    for (let i = 0; i < 4; i++) {
-      this.yourRandomSelectedMoves.push((() => {
-        const r = Math.floor(Math.random() * this.state.myCurrentPokemon.moves.length);
-        return this.state.myCurrentPokemon.moves[r]
-      })());
-    }
-
-    console.log(this.yourRandomSelectedMoves);
   }
 }

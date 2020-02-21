@@ -1,3 +1,11 @@
-<mat-grid-list cols="3" rowHeight="2:1">
-  <mat-grid-tile colspan="3">toto</mat-grid-tile>
+<mat-grid-list cols="3" rowHeight="2:1.5" [ngClass]="move.type.name">
+  <mat-grid-tile colspan="3">{{move.name}}</mat-grid-tile>
+
+  <mat-grid-tile colspan="1" class="type">
+    <p>{{move.type.name.toUpperCase()}}</p>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1">
+    <strong>PP</strong>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1">?? / ??</mat-grid-tile>
 </mat-grid-list>
