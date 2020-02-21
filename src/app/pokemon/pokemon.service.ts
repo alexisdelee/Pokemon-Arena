@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import {forkJoin, Observable} from 'rxjs';
 
 import { Pokemon, Stat } from './pokemon.model';
-import {Move} from './move.model';
+import {Move} from '../move/move.model';
 import {ApiID} from './apiid.model';
+import {filter, map, subscribeOn} from 'rxjs/operators';
 
 @Injectable()
 export class PokemonService {
@@ -56,6 +57,24 @@ export class PokemonService {
 
   getPokemonHpMax(pokemon: Pokemon) {
     return Math.ceil((((2 * this.getStatByName(pokemon, 'hp').base_stat + 100) * pokemon.level) / 100) + 10);
+  }
+
+  hydrateAvaliableMoves(pokemon: Pokemon): Observable<Move[]> {
+    const moveSet = pokemon.moves.filter((move) => {
+      return move.version_group_details.find((versionGroupDetails) => {
+        return versionGroupDetails.version_group.name === 'x-y' &&
+          versionGroupDetails.move_learn_method.name === 'level-up' &&
+          versionGroupDetails.level_learned_at <= pokemon.level;
+      });
+    });
+
+    const promises = [];
+    moveSet.forEach((move) => promises.push(this.getItemFromURI(move.move.url)));
+
+    return forkJoin<Move>(promises).pipe(
+      map((data: Move[]) => {
+        return data.filter((item) => item.damage_class.name !== 'status');
+    }));
   }
 
   loadPickedMoves(movesIds: ApiID[]): Observable<Move[]> {

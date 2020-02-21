@@ -1,11 +1,11 @@
-import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {CombatState} from './CombatState';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {CombatService} from './combat.service';
-import {Move} from '../pokemon/move.model';
+import {Move} from '../move/move.model';
 import {Intent} from './turn-order.model';
 import {Pokemon} from '../pokemon/pokemon.model';
 
@@ -25,51 +25,24 @@ export class CombatComponent implements OnInit {
     private pokemonSvc: PokemonService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private componentResolver: ComponentFactoryResolver
   ) { }
 
   ngOnInit(): void {
     this.state = this.combatSvc.state;
 
     this.activatedRoute.queryParams.subscribe(params => {
-      this.audio = params.audio === "true";
+      this.audio = params.audio === 'true';
     });
 
-    forkJoin([
-      this.pokemonSvc.findPokemon(78),
-      this.pokemonSvc.findPokemon(1),
-      this.pokemonSvc.findPokemon(2),
-      this.pokemonSvc.findPokemon(56)
-    ]).subscribe(
-      (pokes) => {
-        pokes.forEach((poke) => poke.level = 76);
+    if (!this.combatSvc.initTeams()) {
+      this.router.navigateByUrl('/');
+      return;
+    }
 
-        this.state.myTeam = [pokes[0], pokes[1]];
-        this.state.enemyTeam = [pokes[2], pokes[3]];
-
-        if (!this.combatSvc.initTeams()) {
-          this.router.navigateByUrl('/');
-          return;
-        }
-
-        this.pokemonSvc.loadPickedMoves([
-          this.state.myCurrentPokemon.moves[0].move,
-          this.state.myCurrentPokemon.moves[3].move,
-          this.state.myCurrentPokemon.moves[8].move,
-          this.state.myCurrentPokemon.moves[15].move,
-        ]).subscribe(
-          (data) => {
-            this.state.myCurrentPokemon.pickedMoves = data;
-            this.state.enemyCurrentPokemon.pickedMoves = data;
-
-            this.showLoading = false;
-            this.log(`${this.state.myCurrentPokemon.name.toUpperCase()} GO !`);
-            this.log(`The enemy send ${this.state.enemyCurrentPokemon.name.toUpperCase()} !`);
-            this.playMyTurn();
-          }
-        );
-      }
-    );
+    this.showLoading = false;
+    this.log(`${this.state.myCurrentPokemon.name.toUpperCase()} GO !`);
+    this.log(`The enemy send ${this.state.enemyCurrentPokemon.name.toUpperCase()} !`);
+    this.playMyTurn();
   }
 
   private log(txt: string) {

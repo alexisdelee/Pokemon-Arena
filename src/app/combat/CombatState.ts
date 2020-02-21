@@ -1,5 +1,5 @@
 import {Pokemon} from '../pokemon/pokemon.model';
-import {Move} from '../pokemon/move.model';
+import {Move} from '../move/move.model';
 import {Intent} from './turn-order.model';
 
 export class CombatState {

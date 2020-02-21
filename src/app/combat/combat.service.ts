@@ -4,8 +4,9 @@ import { PokemonService } from '../pokemon/pokemon.service';
 import {Intent} from './turn-order.model';
 import {Pokemon} from '../pokemon/pokemon.model';
 import {Type} from '../pokemon/type.model';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Move} from '../move/move.model';
 
 @Injectable({
   providedIn: 'root',
@@ -102,5 +103,14 @@ export class CombatService {
     target.hp = target.hp - dmg >= 0 ? target.hp - dmg : 0;
 
     return dmg;
+  }
+
+  public pickMoves(pokes: Pokemon[]): Observable<Move[][]> {
+    const promises = [];
+    pokes.forEach((p) => {
+      promises.push(this.pokemonService.hydrateAvaliableMoves(p));
+    });
+
+    return forkJoin<Move[]>(promises);
   }
 }

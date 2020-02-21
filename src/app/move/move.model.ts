@@ -1,5 +1,5 @@
-import { ApiID } from './apiid.model';
-import { Type } from './type.model';
+import { ApiID } from '../pokemon/apiid.model';
+import { Type } from '../pokemon/type.model';
 
 interface EffectEntry {
     effect: string;
@@ -45,6 +45,7 @@ export interface MoveVersionGroupDetail {
 
 export interface Move {
     id: number;
+    text: string;
     move: ApiID;
     version_group_details: MoveVersionGroupDetail[];
     name: string;

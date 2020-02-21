@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Move } from '../pokemon/move.model';
+import { Move } from './move.model';
 
 @Component({
   selector: 'move',
@@ -13,6 +13,5 @@ export class MoveComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.move);
   }
 }

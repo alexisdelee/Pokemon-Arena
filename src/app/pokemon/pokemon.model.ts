@@ -1,5 +1,5 @@
 import { ApiID } from './apiid.model';
-import { Move } from './move.model';
+import { Move } from '../move/move.model';
 import { Type } from './type.model';
 
 export interface Ability {

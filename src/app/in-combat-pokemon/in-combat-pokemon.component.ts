@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 import { Pokemon } from '../pokemon/pokemon.model';
 import { PokemonService } from '../pokemon/pokemon.service';

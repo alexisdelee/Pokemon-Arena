@@ -1,0 +1,26 @@
+<mat-grid-list cols="1">
+  <mat-grid-list *ngFor="let pokemon of myTeam" cols="5" rowHeight="2:1.4">
+    <mat-grid-tile colspan="1" rowspan="{{math.ceil(pokemon.moves.length / 4)}}" (click)="onClickPokemon($event, pokemon)" class="pokemon-tile pokemon-tile-{{pokemon.id}}">
+      <pokemon [entity]="pokemon" [minimal]="false"></pokemon>
+    </mat-grid-tile>
+    <div *ngIf="pokemon.moves[0]?.type !== undefined" style="height: 100%; width: 100%;">
+      <mat-grid-tile class="papa-move" colspan="1" rowspan="1" *ngFor="let move of pokemon.moves" (click)="chooseMove($event, pokemon, move)">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              {{move.name | titlecase}}
+              <div [className]="'type-color ' + move.type.name">{{move.type.name | titlecase}}</div>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div matBadgeColor="accent" matBadge="{{move.power}}">Power</div>
+            <div matBadge="{{move.pp}}">PP</div>
+            <div>{{move.text}}</div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+</mat-grid-list>
+<button mat-button (click)="ensurePokemonsHaveMoves()">KOUMBAT</button>
+
