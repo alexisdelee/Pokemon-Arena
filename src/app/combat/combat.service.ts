@@ -56,6 +56,10 @@ export class CombatService {
     return myPokemonSpeed.base_stat > enemyPokemonSpeed.base_stat ? meFirst : enemyFirst;
   }
 
+    getStandingPokemons(pokemons: Pokemon[]) {
+    return pokemons.filter((pokemon) => pokemon.hp > 0);
+  }
+
   public getTypeModifier(intent: Intent, target: Pokemon): Observable<number> {
     return this.pokemonService.getItemFromURI<Type>(intent.move.type.url ?? intent.move.type.type.url).pipe(
       map((attackType) => {
@@ -64,14 +68,10 @@ export class CombatService {
           if (attackType.damage_relations.double_damage_to
             .find((typeRelation) => typeRelation.name === targetType.type.name)) {
             m *= 2;
-          }
-
-          if (attackType.damage_relations.half_damage_to
+          } else if (attackType.damage_relations.half_damage_to
             .find((typeRelation) => typeRelation.name === targetType.type.name)) {
             m *= 0.5;
-          }
-          
-          if (attackType.damage_relations.no_damage_to
+          } else if (attackType.damage_relations.no_damage_to
             .find((typeRelation) => typeRelation.name === targetType.type.name)) {
             m *= 0;
           }

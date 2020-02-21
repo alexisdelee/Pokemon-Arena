@@ -1,3 +1,3 @@
-<img class="pokemon-sprite" (error)="onError()" [ngClass]="facing ? 'enemy-pokemon-sprite' : 'my-pokemon-sprite'" [src]="imageUrl">
+<img *ngIf="pokemon" class="pokemon-sprite" (error)="onError()" [ngClass]="facing ? 'enemy-pokemon-sprite' : 'my-pokemon-sprite'" [src]="imageUrl">
 
-<pokemon-information-panel [pokemon]="pokemon" [hide-status]="facing"></pokemon-information-panel>
+<pokemon-information-panel *ngIf="pokemon" [pokemon]="pokemon" [hide-status]="facing"></pokemon-information-panel>

@@ -6,8 +6,8 @@
   <mat-grid-list cols="12" style="height: 100%" rowHeight="fit">
     <mat-grid-tile colspan="9" rowspan="3" class="combat-backgroud" style="background-image: url('/assets/backgrounds/ocean.png')">
       <div class="combat-circles" style="background-image: url('/assets/backgrounds/ocean_circles.png')">
-        <in-combat-pokemon class="bottom-pokemon-container" [pokemon]="state.myCurrentPokemon" [facing]="false"></in-combat-pokemon>
-        <in-combat-pokemon class="top-pokemon-container" [pokemon]="state.enemyCurrentPokemon" [facing]="true"></in-combat-pokemon>
+        <in-combat-pokemon [pokemon]="state.myCurrentPokemon" [facing]="false" class="bottom-pokemon-container"></in-combat-pokemon>
+        <in-combat-pokemon [pokemon]="state.enemyCurrentPokemon" [facing]="true" class="top-pokemon-container"></in-combat-pokemon>
       </div>
     </mat-grid-tile>
 

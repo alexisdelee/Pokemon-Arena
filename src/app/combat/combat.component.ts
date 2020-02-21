@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CombatState} from './CombatState';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {CombatService} from './combat.service';
@@ -8,6 +8,7 @@ import {Move} from '../pokemon/move.model';
 import {Intent} from './turn-order.model';
 import {map} from 'rxjs/operators';
 import {Pokemon} from '../pokemon/pokemon.model';
+import {InCombatPokemonComponent} from '../in-combat-pokemon/in-combat-pokemon.component';
 
 @Component({
   templateUrl: './combat.component.html',
@@ -23,16 +24,13 @@ export class CombatComponent implements OnInit {
   constructor(
     private combatSvc: CombatService,
     private pokemonSvc: PokemonService,
-    private router: Router
+    private router: Router,
+    private componentResolver: ComponentFactoryResolver
   ) {
     const queryParams = this.router.getCurrentNavigation().extras.queryParams;
     if (queryParams) {
       this.audio = queryParams.audio;
     }
-  }
-
-  private log(txt: string) {
-    this.combatLog += `${txt}\n`;
   }
 
   ngOnInit(): void {
@@ -67,16 +65,19 @@ export class CombatComponent implements OnInit {
 
             this.showLoading = false;
             this.log(`${this.state.myCurrentPokemon.name.toUpperCase()} GO !`);
-            this.log(`The enemy sent ${this.state.enemyCurrentPokemon.name.toUpperCase()} !`);
+            this.log(`The enemy send ${this.state.enemyCurrentPokemon.name.toUpperCase()} !`);
             this.playMyTurn();
           }
         );
       }
     );
-    // console.log(this.route.snapshot.queryParamMap.get("audio"));
   }
 
-  damagePhase(intA: Intent, target: Pokemon): Observable<void> {
+  private log(txt: string) {
+    this.combatLog += `${txt}\n`;
+  }
+
+  private damagePhase(intA: Intent, target: Pokemon): Observable<void> {
     this.log(`${intA.pokemon.name.toUpperCase()} use ${intA.move.name.toUpperCase()} !`);
 
     return this.combatSvc.getTypeModifier(intA, target).pipe(
@@ -97,10 +98,30 @@ export class CombatComponent implements OnInit {
     );
   }
 
-  ko(pokemon: Pokemon): Pokemon {
+  private ko(pokemon: Pokemon): void {
     this.log(`${pokemon.name} is KO !`);
 
-    return;
+    if (this.state.enemyTeam.indexOf(pokemon) !== -1) {
+      const standings = this.combatSvc.getStandingPokemons(this.state.enemyTeam);
+      if (standings.length === 0) {
+        this.log('>>>> VICTORY ! <<<<\nThe opponent have no longer conscious pokemons !');
+
+        return;
+      }
+      this.state.enemyCurrentPokemon = standings[0];
+      this.log(`The opponent send ${this.state.enemyCurrentPokemon.name.toUpperCase()} !`);
+    } else {
+      const standings = this.combatSvc.getStandingPokemons(this.state.myTeam);
+      if (standings.length === 0) {
+        this.log('>>>> DEFEAT ! <<<<\nYou have no more conscious pokemons !');
+
+        return;
+      }
+      this.state.myCurrentPokemon = standings[0]; // Todo: Add pokepicker
+      this.log(`Dont die too fast ${this.state.myCurrentPokemon.name.toUpperCase()} ! GO !`);
+    }
+
+    this.playMyTurn();
   }
 
   combatPhase() {
@@ -111,15 +132,16 @@ export class CombatComponent implements OnInit {
     this.damagePhase(intA, intB.pokemon).subscribe(() => {
       if (intB.pokemon.hp === 0) {
         this.ko(intB.pokemon);
+
         return;
       }
 
       this.damagePhase(intB, intA.pokemon).subscribe(() => {
-        if (intB.pokemon.hp === 0) {
+        if (intA.pokemon.hp === 0) {
           this.ko(intA.pokemon);
+
           return;
         }
-
         this.playMyTurn();
       });
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy} from '@angular/core';
 
 import { Pokemon } from '../pokemon/pokemon.model';
 import { PokemonService } from '../pokemon/pokemon.service';
@@ -6,15 +6,22 @@ import { PokemonService } from '../pokemon/pokemon.service';
 @Component({
   selector: 'in-combat-pokemon',
   templateUrl: './in-combat-pokemon.component.html',
-  styleUrls: ['./in-combat-pokemon.component.scss']
+  styleUrls: ['./in-combat-pokemon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InCombatPokemonComponent implements OnInit {
+export class InCombatPokemonComponent implements OnInit, OnChanges {
   @Input() pokemon: Pokemon;
   @Input() facing: boolean;
   hpMax: number;
   imageUrl: string;
 
   constructor(private pokemonSvc: PokemonService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.pokemon = changes.pokemon.currentValue;
+    console.log(this.pokemon);
+    this.ngOnInit();
+  }
 
   ngOnInit(): void {
     this.hpMax = this.pokemonSvc.getPokemonHpMax(this.pokemon);
