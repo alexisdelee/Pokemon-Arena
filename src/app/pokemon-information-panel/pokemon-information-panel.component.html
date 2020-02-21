@@ -14,7 +14,7 @@
     </mat-grid-list>
 
     <div *ngIf="!hideStatus">
-      <h1 class="pokemon-hp-count">{{pokemon.hp}} / {{hpMax}}</h1>
+      <h1 class="pokemon-hp-count">{{pokemon.hp | number:'1.0-0'}} / {{hpMax}}</h1>
     </div>
   </mat-card-content>
 </mat-card>
