@@ -1,0 +1,12 @@
+:host ::ng-deep pokemon {
+  &:hover {
+    border: 2px solid #ffd740;
+  }
+
+  img.pokemon-types {
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    height: 40px !important;
+  }
+}

@@ -1,17 +1,20 @@
 import {Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 import {forkJoin, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+
 import {CombatState} from './CombatState';
 import {PokemonService} from '../pokemon/pokemon.service';
 import {CombatService} from './combat.service';
 import {Move} from '../pokemon/move.model';
 import {Intent} from './turn-order.model';
 import {Pokemon} from '../pokemon/pokemon.model';
+import {DialogPokemonListComponent} from '../dialog-pokemon-list/dialog-pokemon-list.component';
 
 @Component({
   templateUrl: './combat.component.html',
-  styleUrls: ['./combat.component.scss'],
+  styleUrls: ['./combat.component.scss']
 })
 export class CombatComponent implements OnInit {
   combatLog = '';
@@ -25,7 +28,8 @@ export class CombatComponent implements OnInit {
     private pokemonSvc: PokemonService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private componentResolver: ComponentFactoryResolver
+    private componentResolver: ComponentFactoryResolver,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +65,8 @@ export class CombatComponent implements OnInit {
           (data) => {
             this.state.myCurrentPokemon.pickedMoves = data;
             this.state.enemyCurrentPokemon.pickedMoves = data;
+
+            console.log(this.state.myCurrentPokemon.pickedMoves);
 
             this.showLoading = false;
             this.log(`${this.state.myCurrentPokemon.name.toUpperCase()} GO !`);
@@ -160,5 +166,17 @@ export class CombatComponent implements OnInit {
   private playMyTurn(): void {
     this.timeToPickAMove = true;
     this.log(`YOUR TURN =============== \nChoose a move !`);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogPokemonListComponent, {disableClose: true});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      console.log(result);
+      if (result === true) {
+        // do something here
+      }
+    });
   }
 }
