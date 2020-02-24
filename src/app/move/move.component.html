@@ -1,5 +1,7 @@
 <mat-grid-list cols="5" rowHeight="2:1.5" [ngClass]="move.type.name">
-  <mat-grid-tile style="font-weight: bold" colspan="5"><h1 style="font-weight: bold; text-align: center">{{move.name | titlecase}}</h1></mat-grid-tile>
+  <mat-grid-tile style="font-weight: bold" colspan="5"><h1 style="font-weight: bold; text-align: center">
+    {{move.name | titlecase}} <{{move.power}}>
+  </h1></mat-grid-tile>
 
   <mat-grid-tile colspan="1" rowspan="2" class="type">
     <p>{{move.type.name.toUpperCase()}}</p>
